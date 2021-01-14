@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:layout_gravity="center">
+
+    <TextView
+        android:id="@+id/gridItemName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Item Name"
+        android:textSize="20dp"
+        android:layout_marginTop="5dp"/>
+    <TextView
+        android:id="@+id/gridItemPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Item Price"
+        android:textSize="15dp"
+        android:layout_marginTop="5dp"/>
+    <TextView
+        android:id="@+id/gridItemCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Item Count"
+        android:textSize="15dp"
+        android:layout_marginTop="5dp"/>
+
+</LinearLayout>
