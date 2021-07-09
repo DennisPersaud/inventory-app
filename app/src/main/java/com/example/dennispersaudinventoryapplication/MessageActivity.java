@@ -18,10 +18,13 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
+
 public class MessageActivity extends AppCompatActivity {
 
     // SMS permission constant
-    private int SMS_PERMISSION_CODE = 1;
+    private final int SMS_PERMISSION_CODE = 1;
 
     // Initialize variables
     private NotificationManagerCompat notificationManager;
@@ -49,9 +52,9 @@ public class MessageActivity extends AppCompatActivity {
         switchCompat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ContextCompat.checkSelfPermission(MessageActivity.this,
-                        Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED){
-                    if(switchCompat.isChecked()){
+                if (ContextCompat.checkSelfPermission(MessageActivity.this,
+                        Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
+                    if (switchCompat.isChecked()) {
 
                         /* Implement database listener to check if inventory is low:
                          * I was not able to create the conditional statement to check
@@ -74,7 +77,7 @@ public class MessageActivity extends AppCompatActivity {
 
                         // Display notification
                         notificationManager.notify(1, notification);
-                    }else{
+                    } else {
 
                         // When switch unchecked
                         SharedPreferences.Editor editor = getSharedPreferences("save", MODE_PRIVATE).edit();
@@ -82,7 +85,7 @@ public class MessageActivity extends AppCompatActivity {
                         editor.apply();
                         switchCompat.setChecked(false);
                     }
-                }else{
+                } else {
 
                     // Permission not granted
                     requestSMSPermission();
@@ -92,8 +95,8 @@ public class MessageActivity extends AppCompatActivity {
     }
 
     // Request user for SMS permission
-    private void requestSMSPermission(){
-        if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.SEND_SMS)){
+    private void requestSMSPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.SEND_SMS)) {
 
             // Build Permission
             new AlertDialog.Builder(this)
@@ -105,7 +108,7 @@ public class MessageActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
-                            ActivityCompat.requestPermissions(MessageActivity.this, new String[] {Manifest.permission.SEND_SMS}, SMS_PERMISSION_CODE);
+                            ActivityCompat.requestPermissions(MessageActivity.this, new String[]{Manifest.permission.SEND_SMS}, SMS_PERMISSION_CODE);
                         }
                     })
                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -118,20 +121,21 @@ public class MessageActivity extends AppCompatActivity {
                     })
                     .create()
                     .show();
-        }else{
+        } else {
 
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.SEND_SMS}, SMS_PERMISSION_CODE);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, SMS_PERMISSION_CODE);
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
-        if(requestCode == SMS_PERMISSION_CODE){
-            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == SMS_PERMISSION_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                 Toast.makeText(this, "Permission GRANTED.", Toast.LENGTH_SHORT).show();
-            }else{
+            } else {
 
                 Toast.makeText(this, "Permission DENIED.", Toast.LENGTH_SHORT).show();
             }

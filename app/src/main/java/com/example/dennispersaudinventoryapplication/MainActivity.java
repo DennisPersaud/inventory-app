@@ -9,14 +9,18 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import com.google.android.material.snackbar.Snackbar;
+
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
     // Initialize variables
     private TextView username, password;
     private Button buttonLogin, buttonCreateAccount;
+    private View mainActivity;
     private int counter = 5;
+    Validator validator;
     DatabaseHelper databaseHelper;
     UserData userData;
     Intent intent;
@@ -39,11 +43,15 @@ public class MainActivity extends AppCompatActivity {
                     if(validateUserInfo(username, password)){
                         verifyCredentials(username, password);
                     }else{
-                        Toast.makeText(MainActivity.this, "Login failed.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, R.string.toast_loginFailed, Toast.LENGTH_SHORT).show();
+//                        Snackbar.make(mainActivity,
+//                                R.string.toast_loginFailed, Snackbar.LENGTH_SHORT).show();
                     }
                 }catch (Exception  e){
 
                     Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+//                    Snackbar.make(mainActivity,
+//                            Objects.requireNonNull(e.getMessage()), Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
@@ -56,11 +64,15 @@ public class MainActivity extends AppCompatActivity {
                     if(validateUserInfo(username, password)){
                         verifyUser(username, password);
                     }else{
-                        Toast.makeText(MainActivity.this, "Create account failed.", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MainActivity.this, R.string.toast_createAccountFailed, Toast.LENGTH_SHORT).show();
+                        Snackbar.make(mainActivity,
+                                R.string.toast_createAccountFailed, Snackbar.LENGTH_SHORT).show();
                     }
                 }catch(Exception e){
 
-                    Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Snackbar.make(mainActivity,
+                            Objects.requireNonNull(e.getMessage()), Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
@@ -76,7 +88,9 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }else{
 
-            Toast.makeText(MainActivity.this, "Invalid input.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.toast_invalidInput, Toast.LENGTH_SHORT).show();
+//            Snackbar.make(mainActivity,
+//                    R.string.toast_invalidInput, Snackbar.LENGTH_SHORT).show();
             return false;
         }
     }
@@ -92,13 +106,13 @@ public class MainActivity extends AppCompatActivity {
         if(success){
 
             // If password matches display login message and start DataActivty
-            Toast.makeText(MainActivity.this, "Logging in...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.toast_loginSuccess, Toast.LENGTH_SHORT).show();
             intent = new Intent(MainActivity.this, DataActivity.class);
             startActivity(intent);
         }else{
 
             // If password does not match display message, decrement counter and disable button after 5 tries
-            Toast.makeText(MainActivity.this, "Login failed.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.toast_loginFailed, Toast.LENGTH_SHORT).show();
             counter--;
 
             if(counter == 0){
@@ -116,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(databaseHelper.checkUsername(userData)){
 
-            Toast.makeText(MainActivity.this, "Account already exists.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.toast_accountExists, Toast.LENGTH_SHORT).show();
         }else{
 
             // Create new account and print message to user
@@ -124,10 +138,10 @@ public class MainActivity extends AppCompatActivity {
 
             if(success){
 
-                Toast.makeText(MainActivity.this, "New account created.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, R.string.toast_createAccountSuccess, Toast.LENGTH_SHORT).show();
             }else{
 
-                Toast.makeText(MainActivity.this, "Create account failed.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, R.string.toast_createAccountFailed, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -135,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
     // Initialize views
     private void initViews(){
 
+        mainActivity = (View)findViewById(R.id.mainActivity);
         username = (TextView)findViewById(R.id.editTextUsername);
         password = (TextView)findViewById(R.id.editTextPassword);
         buttonLogin = (Button)findViewById(R.id.buttonLogin);

@@ -42,11 +42,11 @@ public class GridAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        if (inflater == null){
+        if (inflater == null) {
 
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
-        if (convertView == null){
+        if (convertView == null) {
 
             convertView = inflater.inflate(R.layout.activity_row, parent, false);
         }

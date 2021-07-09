@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.provider.ContactsContract;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,17 +12,17 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     // User table constants
-    public static final String USER_TABLE = "USER_TABLE";
-    public static final String COLUMN_USER_ID = "USER_ID";
-    public static final String COLUMN_USER_NAME = "USER_NAME";
-    public static final String COLUMN_USER_PASSWORD = "USER_PASSWORD";
+    private static final String USER_TABLE = "USER_TABLE";
+    private static final String COLUMN_USER_ID = "USER_ID";
+    private static final String COLUMN_USER_NAME = "USER_NAME";
+    private static final String COLUMN_USER_PASSWORD = "USER_PASSWORD";
 
     // Item table constants
-    public static final String ITEM_TABLE = "ITEM_TABLE";
-    public static final String COLUMN_ITEM_NAME = "ITEM_NAME";
-    public static final String COLUMN_ITEM_SKU = "ITEM_SKU";
-    public static final String COLUMN_ITEM_PRICE = "ITEM_PRICE";
-    public static final String COLUMN_ITEM_COUNT = "ITEM_COUNT";
+    private static final String ITEM_TABLE = "ITEM_TABLE";
+    private static final String COLUMN_ITEM_NAME = "ITEM_NAME";
+    private static final String COLUMN_ITEM_SKU = "ITEM_SKU";
+    private static final String COLUMN_ITEM_PRICE = "ITEM_PRICE";
+    private static final String COLUMN_ITEM_COUNT = "ITEM_COUNT";
 
     // Table create statements
     private static final String CREATE_TABLE_USER = "CREATE TABLE " + USER_TABLE + " (" + COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_USER_NAME + " TEXT, " + COLUMN_USER_PASSWORD + " TEXT)";

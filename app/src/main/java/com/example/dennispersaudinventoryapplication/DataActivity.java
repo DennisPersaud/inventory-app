@@ -20,6 +20,32 @@ public class DataActivity extends AppCompatActivity {
     ItemData itemData;
     DatabaseHelper databaseHelper;
 
+    // Initialize views
+    private void initViews(){
+
+        itemName = (TextView)findViewById(R.id.editTextItemName);
+        itemPrice = (TextView)findViewById(R.id.editTextItemPrice);
+        itemCount = (TextView)findViewById(R.id.editTextItemQty);
+        btnAdd = (Button)findViewById(R.id.buttonAdd);
+        btnDelete = (Button)findViewById(R.id.buttonDelete);
+        btnUpdate = (Button)findViewById(R.id.buttonUpdate);
+        btnNotify = (Button)findViewById(R.id.buttonNotification);
+        grid = (GridView)findViewById(R.id.gridView);
+    }
+
+    public String getItemName(){
+        return itemName.getText().toString();
+    }
+
+    public String getItemPrice(){
+        return itemPrice.getText().toString();
+    }
+
+    public String getItemCount(){
+        return itemCount.getText().toString();
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,11 +67,8 @@ public class DataActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try{
 
-                    if(validateItemInfo(itemName, itemPrice, itemCount)){
-
-                        verifyItemAdded(itemName, itemPrice, itemCount);
-                    }else{
-
+                    if(validateItemInfo()){ verifyItemAdded(); }
+                    else{
                         Toast.makeText(DataActivity.this, "Add item failed.", Toast.LENGTH_SHORT).show();
                     }
                 }catch(Exception e){
@@ -61,9 +84,9 @@ public class DataActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try{
 
-                    if(validateItemInfo(itemName, itemPrice, itemCount)){
+                    if(validateItemInfo()){
 
-                        verifyItemDeleted(itemName, itemPrice, itemCount);
+                        verifyItemDeleted();
                     }else{
 
                         Toast.makeText(DataActivity.this, "Delete item failed.", Toast.LENGTH_SHORT).show();
@@ -81,9 +104,9 @@ public class DataActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try{
 
-                    if(validateItemInfo(itemName, itemPrice, itemCount)){
+                    if(validateItemInfo()){
 
-                        verifyItemUpdated(itemName, itemPrice, itemCount);
+                        verifyItemUpdated();
                     }else{
 
                         Toast.makeText(DataActivity.this, "Update item failed.", Toast.LENGTH_SHORT).show();
@@ -118,32 +141,25 @@ public class DataActivity extends AppCompatActivity {
         grid.setAdapter(gridAdapter);
     }
 
-    private boolean validateItemInfo(TextView itemName, TextView itemPrice, TextView itemCount){
+    //TODO: Extract Validate & verification logic to model
+    private boolean validateItemInfo(){
 
-        String itemNameInput = itemName.getText().toString();
-        String itemPriceInput = itemPrice.getText().toString();
-        String itemCountInput = itemCount.getText().toString();
-
-        if(!itemNameInput.isEmpty() && !itemPriceInput.isEmpty() && !itemCountInput.isEmpty()){
-
-            return true;
-        }else{
-
+        if(!getItemName().isEmpty() && !getItemPrice().isEmpty() && !getItemCount().isEmpty()){ return true; }
+        else{
             Toast.makeText(DataActivity.this, "Invalid item.", Toast.LENGTH_SHORT).show();
             return false;
         }
     }
 
-    private void verifyItemAdded(TextView itemName, TextView itemPrice, TextView itemCount){
+    private void verifyItemAdded(){
 
         // Add item to database, update grid view and print message to user if successful
-        itemData = new ItemData(-1, itemName.getText().toString(), Integer.parseInt(itemPrice.getText().toString()), Integer.parseInt(itemCount.getText().toString()));
+        itemData = new ItemData(-1, getItemName(), Integer.parseInt(getItemPrice()), Integer.parseInt(getItemCount()));
         databaseHelper = new DatabaseHelper(DataActivity.this);
 
         boolean success = databaseHelper.addItem(itemData);
 
         if(success){
-
             showItemsOnListView();
             Toast.makeText(DataActivity.this, itemData.getItemName() + " has been added to inventory.", Toast.LENGTH_SHORT).show();
         }else{
@@ -152,10 +168,10 @@ public class DataActivity extends AppCompatActivity {
         }
     }
 
-    private void verifyItemDeleted(TextView itemName, TextView itemPrice, TextView itemCount){
+    private void verifyItemDeleted(){
 
         // Delete item from database, update grid view and print message to user if successful
-        itemData = new ItemData(-1, itemName.getText().toString(), Integer.parseInt(itemPrice.getText().toString()), Integer.parseInt(itemCount.getText().toString()));
+        itemData = new ItemData(-1, getItemName(), Integer.parseInt(getItemPrice()), Integer.parseInt(getItemCount()));
         databaseHelper = new DatabaseHelper(DataActivity.this);
 
         boolean success = databaseHelper.deleteItem(itemData);
@@ -170,10 +186,10 @@ public class DataActivity extends AppCompatActivity {
         }
     }
 
-    private void verifyItemUpdated(TextView itemName, TextView itemPrice, TextView itemCount){
+    private void verifyItemUpdated(){
 
         // Update count for item name, update grid view and print message to user if successful
-        itemData = new ItemData(-1, itemName.getText().toString(), Integer.parseInt(itemPrice.getText().toString()), Integer.parseInt(itemCount.getText().toString()));
+        itemData = new ItemData(-1, getItemName(), Integer.parseInt(getItemPrice()), Integer.parseInt(getItemCount()));
         databaseHelper = new DatabaseHelper(DataActivity.this);
 
         boolean success = databaseHelper.updateItem(itemData);
@@ -186,18 +202,5 @@ public class DataActivity extends AppCompatActivity {
 
             Toast.makeText(DataActivity.this, "Update failed.", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    // Initialize views
-    private void initViews(){
-
-        itemName = (TextView)findViewById(R.id.editTextItemName);
-        itemPrice = (TextView)findViewById(R.id.editTextItemPrice);
-        itemCount = (TextView)findViewById(R.id.editTextItemQty);
-        btnAdd = (Button)findViewById(R.id.buttonAdd);
-        btnDelete = (Button)findViewById(R.id.buttonDelete);
-        btnUpdate = (Button)findViewById(R.id.buttonUpdate);
-        btnNotify = (Button)findViewById(R.id.buttonNotification);
-        grid = (GridView)findViewById(R.id.gridView);
     }
 }
