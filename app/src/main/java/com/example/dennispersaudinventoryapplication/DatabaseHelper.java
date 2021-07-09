@@ -54,7 +54,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Add new user to user table in database
-    public boolean addUser(UserData userData){
+    public boolean addUser(UserData userData) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues cv = new ContentValues();
@@ -72,11 +72,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery("SELECT * FROM " + USER_TABLE + " WHERE " + COLUMN_USER_NAME + " = ?", new String[]{userData.getUserName()});
 
-        if (cursor.getCount() > 0){
+        if (cursor.getCount() > 0) {
             cursor.close();
             db.close();
             return true;
-        }else{
+        } else {
             cursor.close();
             db.close();
             return false;
@@ -84,16 +84,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Check if username and password match database
-    public Boolean checkUsernamePassword(UserData userData){
+    public Boolean checkUsernamePassword(UserData userData) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM " + USER_TABLE + " WHERE " + COLUMN_USER_NAME + " = ? AND " + COLUMN_USER_PASSWORD + " = ?", new String[] {userData.getUserName(),userData.getUserPassword()});
+        Cursor cursor = db.rawQuery("SELECT * FROM " + USER_TABLE + " WHERE " + COLUMN_USER_NAME + " = ? AND " + COLUMN_USER_PASSWORD + " = ?", new String[]{userData.getUserName(), userData.getUserPassword()});
 
-        if(cursor.getCount()>0){
+        if (cursor.getCount() > 0) {
             cursor.close();
             db.close();
             return true;
-        }else{
+        } else {
             cursor.close();
             db.close();
             return false;
@@ -101,15 +101,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Get all items from the database
-    public List<ItemData> getAllItems(){
+    public List<ItemData> getAllItems() {
         List<ItemData> itemList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         String queryString = "SELECT * FROM " + ITEM_TABLE;
 
         Cursor cursor = db.rawQuery(queryString, null);
 
-        if(cursor.moveToFirst()){
-            do{
+        if (cursor.moveToFirst()) {
+            do {
                 int itemSKU = cursor.getInt(0);
                 String itemName = cursor.getString(1);
                 int itemPrice = cursor.getInt(2);
@@ -118,8 +118,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 ItemData newItem = new ItemData(itemSKU, itemName, itemPrice, itemCount);
                 itemList.add(newItem);
 
-            }while(cursor.moveToNext());
-        }else{
+            } while (cursor.moveToNext());
+        } else {
             // Failure, do not add anything to list.
         }
         cursor.close();
@@ -128,7 +128,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Add item to database
-    public boolean addItem(ItemData itemData){
+    public boolean addItem(ItemData itemData) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues cv = new ContentValues();
@@ -142,21 +142,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Delete item from database
-    public boolean deleteItem(ItemData itemData){
+    public boolean deleteItem(ItemData itemData) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        long delete = db.delete(ITEM_TABLE, COLUMN_ITEM_NAME + " = ?", new String[] {String.valueOf(itemData.getItemName())});
+        long delete = db.delete(ITEM_TABLE, COLUMN_ITEM_NAME + " = ?", new String[]{String.valueOf(itemData.getItemName())});
         db.close();
         return delete != -1;
     }
 
     // Update count for item name in database
-    public boolean updateItem(ItemData itemData){
+    public boolean updateItem(ItemData itemData) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_ITEM_COUNT, itemData.getItemCount());
 
-        long update = db.update(ITEM_TABLE, cv, COLUMN_ITEM_NAME + " = ?", new String[] {String.valueOf(itemData.getItemName())});
+        long update = db.update(ITEM_TABLE, cv, COLUMN_ITEM_NAME + " = ?", new String[]{String.valueOf(itemData.getItemName())});
         db.close();
         return update != -1;
     }
