@@ -1,27 +1,26 @@
-package com.example.dennispersaudinventoryapplication;
+package com.example.dennispersaudinventoryapplication.Models;
 
-public class UserData {
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-    // Initialize variables
+@Entity(tableName = "user_table")
+public class User {
+
+    @ColumnInfo(name = "user_id")
+    @PrimaryKey(autoGenerate = true)
     private int id;
+
+    @ColumnInfo(name = "user_name")
     private String userName;
+
+    @ColumnInfo(name = "user_password")
     private String userPassword;
 
     // Constructors
-    public UserData(int id, String userName, String userPassword) {
-        this.id = id;
+    public User(String userName, String userPassword) {
         this.userName = userName;
         this.userPassword = userPassword;
-    }
-
-    // Return contents of userData class object
-    @Override
-    public String toString() {
-        return "UserData{" +
-                "id=" + id +
-                ", userName='" + userName + '\'' +
-                ", userPassword='" + userPassword + '\'' +
-                '}';
     }
 
     // Getters and Setters

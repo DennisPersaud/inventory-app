@@ -1,4 +1,4 @@
-package com.example.dennispersaudinventoryapplication;
+package com.example.dennispersaudinventoryapplication.ViewModel;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,15 +7,18 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.dennispersaudinventoryapplication.Models.Item;
+import com.example.dennispersaudinventoryapplication.R;
+
 import java.util.List;
 
 public class GridAdapter extends BaseAdapter {
 
     private final Context context;
-    private final List<ItemData> items;
+    private final List<Item> items;
     private LayoutInflater inflater;
 
-    public GridAdapter(Context context, List<ItemData> items) {
+    public GridAdapter(Context context, List<Item> items) {
 
         this.context = context;
         this.items = items;
@@ -28,7 +31,7 @@ public class GridAdapter extends BaseAdapter {
     }
 
     @Override
-    public ItemData getItem(int position) {
+    public Item getItem(int position) {
 
         return items.get(position);
     }
@@ -55,7 +58,7 @@ public class GridAdapter extends BaseAdapter {
         TextView gridItemPrice = convertView.findViewById(R.id.gridItemPrice);
         TextView gridItemCount = convertView.findViewById(R.id.gridItemCount);
 
-        ItemData id = this.getItem(position);
+        Item id = this.getItem(position);
 
         gridItemName.setText(id.getItemName());
         gridItemPrice.setText(String.format("Price: $%s", id.getItemPrice()));

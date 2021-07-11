@@ -10,6 +10,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.dennispersaudinventoryapplication.Models.Item;
+import com.example.dennispersaudinventoryapplication.ViewModel.GridAdapter;
+
 public class DataActivity extends AppCompatActivity {
 
     // Initialize variables
@@ -17,7 +20,7 @@ public class DataActivity extends AppCompatActivity {
     private Button btnAdd, btnDelete, btnUpdate, btnNotify;
     private GridView grid;
     Intent intent;
-    ItemData itemData;
+    Item itemData;
     DatabaseHelper databaseHelper;
 
     // Initialize views
@@ -154,7 +157,7 @@ public class DataActivity extends AppCompatActivity {
     private void verifyItemAdded(){
 
         // Add item to database, update grid view and print message to user if successful
-        itemData = new ItemData(-1, getItemName(), Integer.parseInt(getItemPrice()), Integer.parseInt(getItemCount()));
+        itemData = new Item(getItemName(), Integer.parseInt(getItemPrice()), Integer.parseInt(getItemCount()));
         databaseHelper = new DatabaseHelper(DataActivity.this);
 
         boolean success = databaseHelper.addItem(itemData);
@@ -171,7 +174,7 @@ public class DataActivity extends AppCompatActivity {
     private void verifyItemDeleted(){
 
         // Delete item from database, update grid view and print message to user if successful
-        itemData = new ItemData(-1, getItemName(), Integer.parseInt(getItemPrice()), Integer.parseInt(getItemCount()));
+        itemData = new Item(getItemName(), Integer.parseInt(getItemPrice()), Integer.parseInt(getItemCount()));
         databaseHelper = new DatabaseHelper(DataActivity.this);
 
         boolean success = databaseHelper.deleteItem(itemData);
@@ -189,7 +192,7 @@ public class DataActivity extends AppCompatActivity {
     private void verifyItemUpdated(){
 
         // Update count for item name, update grid view and print message to user if successful
-        itemData = new ItemData(-1, getItemName(), Integer.parseInt(getItemPrice()), Integer.parseInt(getItemCount()));
+        itemData = new Item(getItemName(), Integer.parseInt(getItemPrice()), Integer.parseInt(getItemCount()));
         databaseHelper = new DatabaseHelper(DataActivity.this);
 
         boolean success = databaseHelper.updateItem(itemData);

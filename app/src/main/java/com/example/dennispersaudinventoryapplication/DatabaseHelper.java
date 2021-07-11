@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.dennispersaudinventoryapplication.Models.Item;
+import com.example.dennispersaudinventoryapplication.Models.User;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +28,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_ITEM_COUNT = "ITEM_COUNT";
 
     // Table create statements
-    private static final String CREATE_TABLE_USER = "CREATE TABLE " + USER_TABLE + " (" + COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_USER_NAME + " TEXT, " + COLUMN_USER_PASSWORD + " TEXT)";
-    private static final String CREATE_TABLE_ITEM = "CREATE TABLE " + ITEM_TABLE + " (" + COLUMN_ITEM_SKU + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_ITEM_NAME + " TEXT, " + COLUMN_ITEM_PRICE + " INTEGER, " + COLUMN_ITEM_COUNT + " INTEGER)";
+    private static final String CREATE_TABLE_USER = "CREATE TABLE " + USER_TABLE +
+            " (" + COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_USER_NAME +
+            " TEXT, " + COLUMN_USER_PASSWORD + " TEXT)";
+    private static final String CREATE_TABLE_ITEM = "CREATE TABLE " + ITEM_TABLE +
+            " (" + COLUMN_ITEM_SKU + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_ITEM_NAME +
+            " TEXT, " + COLUMN_ITEM_PRICE + " INTEGER, " + COLUMN_ITEM_COUNT + " INTEGER)";
 
     // Constructor
     public DatabaseHelper(Context context) {
@@ -53,7 +60,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Add new user to user table in database
-    public boolean addUser(UserData userData) {
+    public boolean addUser(User userData) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues cv = new ContentValues();
@@ -66,10 +73,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Check if username exists
-    public Boolean checkUsername(UserData userData) {
+    public Boolean checkUsername(User userData) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM " + USER_TABLE + " WHERE " + COLUMN_USER_NAME + " = ?", new String[]{userData.getUserName()});
+        Cursor cursor = db.rawQuery("SELECT * FROM " + USER_TABLE + " WHERE " +
+                COLUMN_USER_NAME + " = ?", new String[]{userData.getUserName()});
 
         if (cursor.getCount() > 0) {
             cursor.close();
@@ -83,10 +91,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Check if username and password match database
-    public Boolean checkUsernamePassword(UserData userData) {
+    public Boolean checkUsernamePassword(User userData) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM " + USER_TABLE + " WHERE " + COLUMN_USER_NAME + " = ? AND " + COLUMN_USER_PASSWORD + " = ?", new String[]{userData.getUserName(), userData.getUserPassword()});
+        Cursor cursor = db.rawQuery("SELECT * FROM " + USER_TABLE + " WHERE " +
+                COLUMN_USER_NAME + " = ? AND " + COLUMN_USER_PASSWORD + " = ?",
+                new String[]{userData.getUserName(), userData.getUserPassword()});
 
         if (cursor.getCount() > 0) {
             cursor.close();
@@ -100,8 +110,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Get all items from the database
-    public List<ItemData> getAllItems() {
-        List<ItemData> itemList = new ArrayList<>();
+    public List<Item> getAllItems() {
+        List<Item> itemList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         String queryString = "SELECT * FROM " + ITEM_TABLE;
 
@@ -109,12 +119,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                int itemSKU = cursor.getInt(0);
                 String itemName = cursor.getString(1);
                 int itemPrice = cursor.getInt(2);
                 int itemCount = cursor.getInt(3);
 
-                ItemData newItem = new ItemData(itemSKU, itemName, itemPrice, itemCount);
+                Item newItem = new Item(itemName, itemPrice, itemCount);
                 itemList.add(newItem);
 
             } while (cursor.moveToNext());
@@ -127,7 +136,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Add item to database
-    public boolean addItem(ItemData itemData) {
+    public boolean addItem(Item itemData) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues cv = new ContentValues();
@@ -141,21 +150,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Delete item from database
-    public boolean deleteItem(ItemData itemData) {
+    public boolean deleteItem(Item itemData) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        long delete = db.delete(ITEM_TABLE, COLUMN_ITEM_NAME + " = ?", new String[]{String.valueOf(itemData.getItemName())});
+        long delete = db.delete(ITEM_TABLE, COLUMN_ITEM_NAME + " = ?",
+                new String[]{String.valueOf(itemData.getItemName())});
         db.close();
         return delete != -1;
     }
 
     // Update count for item name in database
-    public boolean updateItem(ItemData itemData) {
+    public boolean updateItem(Item itemData) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_ITEM_COUNT, itemData.getItemCount());
 
-        long update = db.update(ITEM_TABLE, cv, COLUMN_ITEM_NAME + " = ?", new String[]{String.valueOf(itemData.getItemName())});
+        long update = db.update(ITEM_TABLE, cv, COLUMN_ITEM_NAME + " = ?",
+                new String[]{String.valueOf(itemData.getItemName())});
         db.close();
         return update != -1;
     }

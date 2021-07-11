@@ -33,6 +33,16 @@ dependencies {
     // Backwards compatibility
     implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
 
+    // Room components
+    implementation "androidx.room:room-runtime:$rootProject.roomVersion"
+    implementation "org.jetbrains:annotations:$rootProject.annotationsVersion"
+    annotationProcessor "androidx.room:room-compiler:$rootProject.roomVersion"
+
+    // Lifecycle components
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$rootProject.lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-livedata:$rootProject.lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$rootProject.lifecycleVersion"
+
     // UI components
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
     implementation "com.google.android.material:material:$rootProject.materialVersion"
@@ -42,4 +52,5 @@ dependencies {
     testImplementation "com.google.truth:truth:$rootProject.truthVersion"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.androidxJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
+    androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
 }

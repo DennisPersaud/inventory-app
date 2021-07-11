@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">dennispersaudinventoryapplication</string>
-    <string name="toast_invalidInput">Invalid input.</string>
     <string name="toast_loginSuccess">Logging in…</string>
     <string name="toast_loginFailed">Login failed.</string>
     <string name="toast_accountExists">Account already exists.</string>
