@@ -2,12 +2,16 @@ package com.example.dennispersaudinventoryapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dennispersaudinventoryapplication.Models.Item;
@@ -87,18 +91,23 @@ public class DataActivity extends AppCompatActivity {
                 Toast.makeText(DataActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
 
-        // Notification button listener
-        btnNotify.setOnClickListener(v -> {
-            try{
-                // Start MessageActivity on button click
-                intent = new Intent(DataActivity.this, MessageActivity.class);
-                startActivity(intent);
-            }catch(Exception e){
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_data, menu);
+        return true;
+    }
 
-                Toast.makeText(DataActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.menu) {
+            // Start MessageActivity on button click
+            intent = new Intent(DataActivity.this, MessageActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     // Load all items from database into the grid
