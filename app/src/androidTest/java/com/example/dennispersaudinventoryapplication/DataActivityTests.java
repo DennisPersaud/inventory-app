@@ -22,9 +22,10 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.junit.Assert.fail;
 
 
-public class DataActivityTest {
+public class DataActivityTests {
     private View decorView;
 
     @Rule
@@ -43,9 +44,5 @@ public class DataActivityTest {
     @Test
     public void test_isDataActivityInView() {
         onView(withId(R.id.dataActivity)).check(matches(isDisplayed()));
-    }
-
-    @After
-    public void tearDown() throws Exception {
     }
 }

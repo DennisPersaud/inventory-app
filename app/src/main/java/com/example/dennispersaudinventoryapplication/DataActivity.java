@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dennispersaudinventoryapplication.Models.Item;
+import com.example.dennispersaudinventoryapplication.ViewModel.DataActivityViewModel;
 import com.example.dennispersaudinventoryapplication.ViewModel.GridAdapter;
 
 public class DataActivity extends AppCompatActivity {
@@ -19,35 +20,10 @@ public class DataActivity extends AppCompatActivity {
     private TextView itemName, itemPrice, itemCount;
     private Button btnAdd, btnDelete, btnUpdate, btnNotify;
     private GridView grid;
+    private DataActivityViewModel dataViewModel;
     Intent intent;
     Item itemData;
     DatabaseHelper databaseHelper;
-
-    // Initialize views
-    private void initViews(){
-
-        itemName = (TextView)findViewById(R.id.editTextItemName);
-        itemPrice = (TextView)findViewById(R.id.editTextItemPrice);
-        itemCount = (TextView)findViewById(R.id.editTextItemQty);
-        btnAdd = (Button)findViewById(R.id.buttonAdd);
-        btnDelete = (Button)findViewById(R.id.buttonDelete);
-        btnUpdate = (Button)findViewById(R.id.buttonUpdate);
-        btnNotify = (Button)findViewById(R.id.buttonNotification);
-        grid = (GridView)findViewById(R.id.gridView);
-    }
-
-    public String getItemName(){
-        return itemName.getText().toString();
-    }
-
-    public String getItemPrice(){
-        return itemPrice.getText().toString();
-    }
-
-    public String getItemCount(){
-        return itemCount.getText().toString();
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,74 +41,62 @@ public class DataActivity extends AppCompatActivity {
         showItemsOnListView();
 
         // Add item button listener
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try{
+        btnAdd.setOnClickListener(v -> {
+            try{
 
-                    if(validateItemInfo()){ verifyItemAdded(); }
-                    else{
-                        Toast.makeText(DataActivity.this, "Add item failed.", Toast.LENGTH_SHORT).show();
-                    }
-                }catch(Exception e){
-
-                    Toast.makeText(DataActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                if(validateItemInfo()){ verifyItemAdded(); }
+                else{
+                    Toast.makeText(DataActivity.this, "Add item failed.", Toast.LENGTH_SHORT).show();
                 }
+            }catch(Exception e){
+
+                Toast.makeText(DataActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
         // Delete item button listener
-        btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try{
+        btnDelete.setOnClickListener(v -> {
+            try{
 
-                    if(validateItemInfo()){
+                if(validateItemInfo()){
 
-                        verifyItemDeleted();
-                    }else{
+                    verifyItemDeleted();
+                }else{
 
-                        Toast.makeText(DataActivity.this, "Delete item failed.", Toast.LENGTH_SHORT).show();
-                    }
-                }catch(Exception e){
-
-                    Toast.makeText(DataActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DataActivity.this, "Delete item failed.", Toast.LENGTH_SHORT).show();
                 }
+            }catch(Exception e){
+
+                Toast.makeText(DataActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
         // Update item count button listener
-        btnUpdate.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                try{
+        btnUpdate.setOnClickListener(v -> {
+            try{
 
-                    if(validateItemInfo()){
+                if(validateItemInfo()){
 
-                        verifyItemUpdated();
-                    }else{
+                    verifyItemUpdated();
+                }else{
 
-                        Toast.makeText(DataActivity.this, "Update item failed.", Toast.LENGTH_SHORT).show();
-                    }
-                }catch(Exception e){
-
-                    Toast.makeText(DataActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DataActivity.this, "Update item failed.", Toast.LENGTH_SHORT).show();
                 }
+            }catch(Exception e){
+
+                Toast.makeText(DataActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
         // Notification button listener
-        btnNotify.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                try{
-                    // Start MessageActivity on button click
-                    intent = new Intent(DataActivity.this, MessageActivity.class);
-                    startActivity(intent);
-                }catch(Exception e){
+        btnNotify.setOnClickListener(v -> {
+            try{
+                // Start MessageActivity on button click
+                intent = new Intent(DataActivity.this, MessageActivity.class);
+                startActivity(intent);
+            }catch(Exception e){
 
-                    Toast.makeText(DataActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(DataActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -205,5 +169,30 @@ public class DataActivity extends AppCompatActivity {
 
             Toast.makeText(DataActivity.this, "Update failed.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    // Initialize views
+    private void initViews(){
+
+        itemName = (TextView)findViewById(R.id.editTextItemName);
+        itemPrice = (TextView)findViewById(R.id.editTextItemPrice);
+        itemCount = (TextView)findViewById(R.id.editTextItemQty);
+        btnAdd = (Button)findViewById(R.id.buttonAdd);
+        btnDelete = (Button)findViewById(R.id.buttonDelete);
+        btnUpdate = (Button)findViewById(R.id.buttonUpdate);
+        btnNotify = (Button)findViewById(R.id.buttonNotification);
+        grid = (GridView)findViewById(R.id.gridView);
+    }
+
+    public String getItemName(){
+        return itemName.getText().toString();
+    }
+
+    public String getItemPrice(){
+        return itemPrice.getText().toString();
+    }
+
+    public String getItemCount(){
+        return itemCount.getText().toString();
     }
 }
