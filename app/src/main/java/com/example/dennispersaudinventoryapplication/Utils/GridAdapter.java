@@ -1,4 +1,4 @@
-package com.example.dennispersaudinventoryapplication.ViewModel;
+package com.example.dennispersaudinventoryapplication.Utils;
 
 import android.content.Context;
 import android.view.LayoutInflater;

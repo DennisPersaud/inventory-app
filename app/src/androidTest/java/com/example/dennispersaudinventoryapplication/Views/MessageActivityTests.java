@@ -1,10 +1,9 @@
-package com.example.dennispersaudinventoryapplication;
+package com.example.dennispersaudinventoryapplication.Views;
 
 import android.view.View;
 
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
-
-import junit.framework.TestCase;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -14,6 +13,9 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+
+import com.example.dennispersaudinventoryapplication.R;
+import com.example.dennispersaudinventoryapplication.Views.MessageActivity;
 
 public class MessageActivityTests {
     private View decorView;
@@ -33,6 +35,6 @@ public class MessageActivityTests {
      */
     @Test
     public void test_isMessageActivityInView() {
-        onView(withId(R.id.messageActivity)).check(matches(isDisplayed()));
+        onView(ViewMatchers.withId(R.id.messageActivity)).check(matches(isDisplayed()));
     }
 }

@@ -44,10 +44,14 @@ public abstract class MainDatabase extends RoomDatabase {
         public void onCreate(@NonNull @NotNull SupportSQLiteDatabase db) {
             super.onCreate(db);
             databaseWriterExecutor.execute(() -> {
-//                ItemDao itemDao = INSTANCE.itemDao();
+                ItemDao itemDao = INSTANCE.itemDao();
+                Item sampleItem = new Item("Book", 12, 1);
+                itemDao.insertItem(sampleItem);
+                Item sampleItem2 = new Item("Gold Bars", 1200, 1);
+                itemDao.insertItem(sampleItem2);
 
                 UserDao userDao = INSTANCE.userDao();
-                User sampleUser = new User("SampleUser", "123");
+                User sampleUser = new User("SampleUser", "123456");
                 userDao.insertUser(sampleUser);
             });
         }

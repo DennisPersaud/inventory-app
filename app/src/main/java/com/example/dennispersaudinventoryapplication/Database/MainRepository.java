@@ -38,8 +38,18 @@ public class MainRepository {
         MainDatabase.databaseWriterExecutor.execute(() -> itemDao.deleteItem(item));
     }
 
-    public LiveData<List<Item>> getAllItems() {
+    public LiveData<List<Item>> loadAllItems() {
         return allItems;
+    }
+
+    public List<Item> getAllItems() throws ExecutionException, InterruptedException {
+        Future<List<Item>> future = MainDatabase.databaseWriterExecutor.submit(itemDao::getAllItems);
+        return future.get();
+    }
+
+    public Item getItemByName(String name) throws ExecutionException, InterruptedException {
+        Future<Item> future = MainDatabase.databaseWriterExecutor.submit(() -> itemDao.getItemByName(name));
+        return future.get();
     }
 
     /*

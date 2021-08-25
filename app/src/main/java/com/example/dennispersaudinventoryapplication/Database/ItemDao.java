@@ -23,7 +23,7 @@ public interface ItemDao {
     @Delete
     void deleteItem(Item item);
 
-    // Return list of all user objects in the database
+    // Return list of all item objects in the database
     @Query("SELECT * FROM item_table")
     List<Item> getAllItems();
 

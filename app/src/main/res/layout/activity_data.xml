@@ -1,109 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dataActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/dataActivity">
+    android:orientation="vertical"
+    android:weightSum="10">
+
 
     <GridView
         android:id="@+id/gridView"
-        android:layout_width="match_parent"
-        android:layout_height="512dp"
-        android:layout_below="@+id/editTextItemQty"
-        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="575dp"
         android:columnWidth="120dp"
         android:gravity="center"
         android:numColumns="auto_fit">
-
     </GridView>
 
-    <EditText
-        android:id="@+id/editTextItemName"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="242dp"
-        android:ems="10"
-        android:hint="Item"
-        android:inputType="textPersonName" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
 
-    <EditText
-        android:id="@+id/editTextItemPrice"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextItemName"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="236dp"
-        android:ems="10"
-        android:hint="Price"
-        android:inputType="textPersonName" />
-
-
-    <EditText
-        android:id="@+id/editTextItemQty"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextItemPrice"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="239dp"
-        android:ems="10"
-        android:hint="Qty"
-        android:inputType="textPersonName" />
-
-    <Button
-        android:id="@+id/buttonAdd"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_addItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="218dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="302dp"
-        android:gravity="center"
-        android:minWidth="80dp"
-        android:minHeight="20dp"
-        android:padding="10dp"
-        android:text="Add" />
+        android:layout_gravity="right"
+        android:elevation="6dp"
+        app:pressedTranslationZ="12dp"
+        android:src="@drawable/ic_fab_add"
+        android:tint="@android:color/white"
+        android:layout_margin="16dp"
+        app:fabSize="normal" />
 
-    <Button
-        android:id="@+id/buttonDelete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonNotification"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="25dp"
-        android:gravity="center"
-        android:minWidth="80dp"
-        android:minHeight="20dp"
-        android:padding="10dp"
-        android:text="Delete" />
 
-    <Button
-        android:id="@+id/buttonUpdate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonAdd"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="218dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="114dp"
-        android:gravity="center"
-        android:minWidth="80dp"
-        android:minHeight="20dp"
-        android:padding="10dp"
-        android:text="Update" />
+</LinearLayout>
 
-</RelativeLayout>
+    <!--    <EditText-->
+    <!--        android:id="@+id/editTextItemName"-->
+    <!--        android:layout_width="150dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_alignParentStart="true"-->
+    <!--        android:layout_alignParentTop="true"-->
+    <!--        android:layout_alignParentEnd="true"-->
+    <!--        android:layout_marginStart="25dp"-->
+    <!--        android:layout_marginTop="20dp"-->
+    <!--        android:layout_marginEnd="242dp"-->
+    <!--        android:ems="10"-->
+    <!--        android:hint="Item"-->
+    <!--        android:inputType="textPersonName" />-->
+
+    <!--    <EditText-->
+    <!--        android:id="@+id/editTextItemPrice"-->
+    <!--        android:layout_width="150dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_below="@+id/editTextItemName"-->
+    <!--        android:layout_alignParentStart="true"-->
+    <!--        android:layout_alignParentEnd="true"-->
+    <!--        android:layout_marginStart="25dp"-->
+    <!--        android:layout_marginTop="20dp"-->
+    <!--        android:layout_marginEnd="236dp"-->
+    <!--        android:ems="10"-->
+    <!--        android:hint="Price"-->
+    <!--        android:inputType="textPersonName" />-->
+
+    <!--    <EditText-->
+    <!--        android:id="@+id/editTextItemQty"-->
+    <!--        android:layout_width="150dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_below="@+id/editTextItemPrice"-->
+    <!--        android:layout_alignParentStart="true"-->
+    <!--        android:layout_alignParentEnd="true"-->
+    <!--        android:layout_marginStart="25dp"-->
+    <!--        android:layout_marginTop="20dp"-->
+    <!--        android:layout_marginEnd="239dp"-->
+    <!--        android:ems="10"-->
+    <!--        android:hint="Qty"-->
+    <!--        android:inputType="textPersonName" />-->
+
+    <!--    <Button-->
+    <!--        android:id="@+id/buttonAdd"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_alignParentStart="true"-->
+    <!--        android:layout_alignParentTop="true"-->
+    <!--        android:layout_marginStart="218dp"-->
+    <!--        android:layout_marginTop="20dp"-->
+    <!--        android:layout_marginEnd="302dp"-->
+    <!--        android:gravity="center"-->
+    <!--        android:minWidth="80dp"-->
+    <!--        android:minHeight="20dp"-->
+    <!--        android:padding="10dp"-->
+    <!--        android:text="Add" />-->
+
+    <!--    <Button-->
+    <!--        android:id="@+id/buttonDelete"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_below="@+id/buttonNotification"-->
+    <!--        android:layout_alignParentEnd="true"-->
+    <!--        android:layout_marginTop="20dp"-->
+    <!--        android:layout_marginEnd="25dp"-->
+    <!--        android:gravity="center"-->
+    <!--        android:minWidth="80dp"-->
+    <!--        android:minHeight="20dp"-->
+    <!--        android:padding="10dp"-->
+    <!--        android:text="Delete" />-->
+
+    <!--    <Button-->
+    <!--        android:id="@+id/buttonUpdate"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_below="@+id/buttonAdd"-->
+    <!--        android:layout_alignParentStart="true"-->
+    <!--        android:layout_marginStart="218dp"-->
+    <!--        android:layout_marginTop="20dp"-->
+    <!--        android:gravity="center"-->
+    <!--        android:minWidth="80dp"-->
+    <!--        android:minHeight="20dp"-->
+    <!--        android:padding="10dp"-->
+    <!--        android:text="Update" />-->

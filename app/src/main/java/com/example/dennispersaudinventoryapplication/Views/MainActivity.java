@@ -1,4 +1,4 @@
-package com.example.dennispersaudinventoryapplication;
+package com.example.dennispersaudinventoryapplication.Views;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.dennispersaudinventoryapplication.Models.User;
+import com.example.dennispersaudinventoryapplication.R;
 import com.example.dennispersaudinventoryapplication.ViewModel.MainActivityViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -23,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
     private View mainActivity;
     private MainActivityViewModel mainViewModel;
     private final int counter = 5;
-    DatabaseHelper databaseHelper;
     User userData;
     Intent intent;
 
@@ -90,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
         buttonLogin = findViewById(R.id.buttonLogin);
         buttonCreateAccount = findViewById(R.id.buttonCreateAccount);
 
-        databaseHelper = new DatabaseHelper(this);
         mainViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
     }
 

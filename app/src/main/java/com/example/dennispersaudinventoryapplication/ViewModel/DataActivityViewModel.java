@@ -9,6 +9,7 @@ import com.example.dennispersaudinventoryapplication.Database.MainRepository;
 import com.example.dennispersaudinventoryapplication.Models.Item;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class DataActivityViewModel extends AndroidViewModel {
 
@@ -19,7 +20,7 @@ public class DataActivityViewModel extends AndroidViewModel {
     public DataActivityViewModel(Application application) {
         super(application);
         mRepo = new MainRepository(application);
-        mAllItems = mRepo.getAllItems();
+        mAllItems = mRepo.loadAllItems();
     }
 
     public void insertItem(Item item) { mRepo.insertItem(item);}
@@ -28,5 +29,9 @@ public class DataActivityViewModel extends AndroidViewModel {
 
     public void deleteItem(Item item) { mRepo.deleteItem(item);}
 
-    public LiveData<List<Item>> getmAllItems() { return mAllItems; }
+    public LiveData<List<Item>> loadAllItems() { return mAllItems; }
+
+    public List<Item> getAllItems() throws ExecutionException, InterruptedException { return mRepo.getAllItems(); }
+
+    public Item getItemByName(String name) throws ExecutionException, InterruptedException { return mRepo.getItemByName(name); }
 }

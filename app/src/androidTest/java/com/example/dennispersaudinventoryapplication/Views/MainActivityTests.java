@@ -1,29 +1,22 @@
-package com.example.dennispersaudinventoryapplication;
+package com.example.dennispersaudinventoryapplication.Views;
 
-import android.app.Activity;
-import android.app.ActivityManager;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.view.View;
 
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.Espresso.openContextualActionModeOverflowMenu;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.hasErrorText;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withHint;
@@ -33,7 +26,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.io.IOException;
+import com.example.dennispersaudinventoryapplication.R;
+import com.example.dennispersaudinventoryapplication.Views.MainActivity;
 
 @LargeTest
 public class MainActivityTests {
@@ -67,41 +61,40 @@ public class MainActivityTests {
      */
     @Test
     public void test_isActivityInView() {
-        onView(withId(R.id.mainActivity)).check(matches(isDisplayed()));
+        onView(ViewMatchers.withId(R.id.mainActivity)).check(matches(isDisplayed()));
     }
 
     /*
-     * Test if title of login button is displayed
+     * Test if login button is displayed
      */
     @Test
-    public void test_visibility_title_loginButton() {
+    public void test_visibility_button_login() {
         onView(withId(R.id.buttonLogin)).check(matches(isDisplayed()));
     }
 
     /*
-     * Test if login button was clicked
+     * Test if create account button is displayed
      */
     @Test
-    public void test_clicked_loginButton() {
-        onView(withId(R.id.buttonLogin)).perform(click());
-
-    }
-
-    /*
-     * Test if title of create account button is displayed
-     */
-    @Test
-    public void test_visibility_title_createAccountButton() {
+    public void test_visibility_button_createAccount() {
         onView(withId(R.id.buttonCreateAccount)).check(matches(isDisplayed()));
     }
 
+
     /*
-     * Test if create account button was clicked
+     * Test if edit text username is displayed
      */
     @Test
-    public void test_clicked_createAccountButton() {
-        onView(withId(R.id.buttonCreateAccount)).perform(click());
+    public void test_visibility_editText_username() {
+        onView(withId(R.id.editTextUsername)).check(matches(isDisplayed()));
+    }
 
+    /*
+     * Test if edit text password is displayed
+     */
+    @Test
+    public void test_visibility_editText_password() {
+        onView(withId(R.id.editTextPassword)).check(matches(isDisplayed()));
     }
 
     /*

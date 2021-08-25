@@ -1,4 +1,4 @@
-package com.example.dennispersaudinventoryapplication;
+package com.example.dennispersaudinventoryapplication.Views;
 
 import android.Manifest;
 import android.app.Notification;
@@ -17,6 +17,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
+
+import com.example.dennispersaudinventoryapplication.App;
+import com.example.dennispersaudinventoryapplication.R;
 
 public class MessageActivity extends AppCompatActivity {
 
