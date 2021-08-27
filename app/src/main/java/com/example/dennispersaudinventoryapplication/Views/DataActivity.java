@@ -83,6 +83,9 @@ public class DataActivity extends AppCompatActivity {
 
     // Load all items from database into the grid
     private void showItemsOnListView() throws ExecutionException, InterruptedException {
+
+        // TODO: Replace dataViewModel.getAllItems() with dataViewModel.loadAllItems()
+
         GridAdapter gridAdapter = new GridAdapter(DataActivity.this, dataViewModel.getAllItems());
         grid.setAdapter(gridAdapter);
     }
@@ -92,13 +95,6 @@ public class DataActivity extends AppCompatActivity {
     private void initViews() {
 
         dataActivity = findViewById(R.id.dataActivity);
-//        itemName = (TextView) findViewById(R.id.editTextItemName);
-//        itemPrice = (TextView) findViewById(R.id.editTextItemPrice);
-//        itemCount = (TextView) findViewById(R.id.editTextItemQty);
-//        btnAdd = (Button) findViewById(R.id.buttonAdd);
-//        btnDelete = (Button) findViewById(R.id.buttonDelete);
-//        btnUpdate = (Button) findViewById(R.id.buttonUpdate);
-//        btnNotify = (Button) findViewById(R.id.buttonNotification);
         fabAddItem = findViewById(R.id.fab_addItem);
         grid = findViewById(R.id.gridView);
 
@@ -119,116 +115,3 @@ public class DataActivity extends AppCompatActivity {
         return itemCount.getText().toString();
     }
 }
-
-
-//        // Add item button listener
-//        btnAdd.setOnClickListener(v -> {
-//            try{
-//
-//                if(validateItemInfo()){ verifyItemAdded(); }
-//                else{
-//                    Toast.makeText(DataActivity.this, "Add item failed.", Toast.LENGTH_SHORT).show();
-//                }
-//            }catch(Exception e){
-//
-//                Toast.makeText(DataActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        // Delete item button listener
-//        btnDelete.setOnClickListener(v -> {
-//            try{
-//
-//                if(validateItemInfo()){
-//
-//                    verifyItemDeleted();
-//                }else{
-//
-//                    Toast.makeText(DataActivity.this, "Delete item failed.", Toast.LENGTH_SHORT).show();
-//                }
-//            }catch(Exception e){
-//
-//                Toast.makeText(DataActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        // Update item count button listener
-//        btnUpdate.setOnClickListener(v -> {
-//            try{
-//
-//                if(validateItemInfo()){
-//
-//                    verifyItemUpdated();
-//                }else{
-//
-//                    Toast.makeText(DataActivity.this, "Update item failed.", Toast.LENGTH_SHORT).show();
-//                }
-//            }catch(Exception e){
-//
-//                Toast.makeText(DataActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
-
-//    //TODO: Extract Validate & verification logic to model
-//    private boolean validateItemInfo(){
-//
-//        if(!getItemName().isEmpty() && !getItemPrice().isEmpty() && !getItemCount().isEmpty()){ return true; }
-//        else{
-//            Toast.makeText(DataActivity.this, "Invalid item.", Toast.LENGTH_SHORT).show();
-//            return false;
-//        }
-//    }
-//
-//    private void verifyItemAdded(){
-//
-//        // Add item to database, update grid view and print message to user if successful
-//        itemData = new Item(getItemName(), Integer.parseInt(getItemPrice()), Integer.parseInt(getItemCount()));
-//        databaseHelper = new DatabaseHelper(DataActivity.this);
-//
-//        boolean success = databaseHelper.addItem(itemData);
-//
-//        if(success){
-//            showItemsOnListView();
-//            Toast.makeText(DataActivity.this, itemData.getItemName() + " has been added to inventory.", Toast.LENGTH_SHORT).show();
-//        }else{
-//
-//            Toast.makeText(DataActivity.this, "Add item failed.", Toast.LENGTH_SHORT).show();
-//        }
-//    }
-//
-//    private void verifyItemDeleted(){
-//
-//        // Delete item from database, update grid view and print message to user if successful
-//        itemData = new Item(getItemName(), Integer.parseInt(getItemPrice()), Integer.parseInt(getItemCount()));
-//        databaseHelper = new DatabaseHelper(DataActivity.this);
-//
-//        boolean success = databaseHelper.deleteItem(itemData);
-//
-//        if(success){
-//
-//            showItemsOnListView();
-//            Toast.makeText(DataActivity.this, itemData.getItemName() + " has been deleted from inventory", Toast.LENGTH_SHORT).show();
-//        }else{
-//
-//            Toast.makeText(DataActivity.this, "Remove item failed.", Toast.LENGTH_SHORT).show();
-//        }
-//    }
-//
-//    private void verifyItemUpdated(){
-//
-//        // Update count for item name, update grid view and print message to user if successful
-//        itemData = new Item(getItemName(), Integer.parseInt(getItemPrice()), Integer.parseInt(getItemCount()));
-//        databaseHelper = new DatabaseHelper(DataActivity.this);
-//
-//        boolean success = databaseHelper.updateItem(itemData);
-//
-//        if(success){
-//
-//            showItemsOnListView();
-//            Toast.makeText(DataActivity.this, "Count for " + itemData.getItemName() + " has been updated to " + itemData.getItemCount(), Toast.LENGTH_SHORT).show();
-//        }else{
-//
-//            Toast.makeText(DataActivity.this, "Update failed.", Toast.LENGTH_SHORT).show();
-//        }
-//    }

@@ -36,21 +36,18 @@ public class BottomSheetAddItemDialog extends BottomSheetDialogFragment {
 
         addButton.setOnClickListener(v1 -> {
 
+            // TODO: Fix insert item logic
 
-            Uri webpage = Uri.parse("https://www.android.com");
-            Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
-            startActivity(webIntent);
-            
-//            if (!getItemName().isEmpty() && !getItemPrice().isEmpty() && !getItemCount().isEmpty()) {
-//                Log.d("ITEM_NAME:", getItemName());
-//                Log.d("ITEM_COUNT:", getItemCount());
-//                Log.d("ITEM_PRICE:", getItemPrice());
-//                Item newItem = new Item(getItemName(), Integer.parseInt(getItemPrice()), Integer.parseInt(getItemCount()));
-//                Log.d("ITEM_OBJECT:", newItem.toString());
-//                dataViewModel.insertItem(newItem);
-//            } else {
-//                Snackbar.make(dataActivity, "Please enter all fields.", Snackbar.LENGTH_SHORT).show();
-//            }
+            if (!getItemName().isEmpty() && !getItemPrice().isEmpty() && !getItemCount().isEmpty()) {
+                Log.d("ITEM_NAME:", getItemName());
+                Log.d("ITEM_COUNT:", getItemCount());
+                Log.d("ITEM_PRICE:", getItemPrice());
+                Item newItem = new Item(getItemName(), Integer.parseInt(getItemPrice()), Integer.parseInt(getItemCount()));
+                Log.d("ITEM_OBJECT:", newItem.toString());
+                dataViewModel.insertItem(newItem);
+            } else {
+                Snackbar.make(dataActivity, "Please enter all fields.", Snackbar.LENGTH_SHORT).show();
+            }
         });
 
         return v;

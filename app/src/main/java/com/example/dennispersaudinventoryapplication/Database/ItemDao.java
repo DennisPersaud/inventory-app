@@ -31,6 +31,6 @@ public interface ItemDao {
     @Query("SELECT * FROM item_table WHERE item_name = :name")
     Item getItemByName(String name);
 
-    @Query("SELECT * FROM item_table ORDER BY item_id DESC")
+    @Query("SELECT * FROM item_table")
     LiveData<List<Item>> loadAllItems();
 }

@@ -33,6 +33,9 @@ public class BottomSheetUpdateItemDialog extends BottomSheetDialogFragment {
         initViews(v);
 
         updateButton.setOnClickListener(v1 -> {
+
+            // TODO: Fix update item logic
+
             if (!getItemName().isEmpty() && !getItemPrice().isEmpty() && !getItemCount().isEmpty()) {
                 Log.d("TEST", "Update Button Clicked!");
                 // search db for item id by item name
@@ -51,6 +54,9 @@ public class BottomSheetUpdateItemDialog extends BottomSheetDialogFragment {
         });
 
         deleteButton.setOnClickListener(v1 -> {
+
+            //TODO: FIx delete item logic
+
             if (!getItemName().isEmpty() && !getItemPrice().isEmpty() && !getItemCount().isEmpty()) {
                 Log.d("TEST", "Delete Button Clicked!");
                 try {
