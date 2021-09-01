@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.dennispersaudinventoryapplication.Models.Item;
 import com.example.dennispersaudinventoryapplication.R;
@@ -41,13 +42,18 @@ public class BottomSheetUpdateItemDialog extends BottomSheetDialogFragment {
                 // search db for item id by item name
                 // get item from item clicked on grid
                 try {
+                    Log.d("ITEM_NAME:", getItemName());
+                    Log.d("ITEM_COUNT:", getItemCount());
+                    Log.d("ITEM_PRICE:", getItemPrice());
                     Item updateItem = dataViewModel.getItemByName(getItemName());
+                    Log.d("ITEM_OBJECT:", updateItem.toString());
+                    // updateItem.setItemName(getItemName());
+                    updateItem.setItemCount(Integer.parseInt(getItemCount()));
+                    updateItem.setItemPrice(Integer.parseInt(getItemPrice()));
+                    dataViewModel.updateItem(updateItem);
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
-                // update item in db by id
-    //            dataViewModel.updateItem(updateItem);
-    //            dataViewModel.getItemByName();
             } else {
                 Snackbar.make(dataActivity, "Please enter all the fields.", Snackbar.LENGTH_SHORT).show();
             }
@@ -63,6 +69,7 @@ public class BottomSheetUpdateItemDialog extends BottomSheetDialogFragment {
                     // search db for item id by item name
                     // Get item from item clicked on grid
                     Item deleteItem = dataViewModel.getItemByName(getItemName());
+                    dataViewModel.deleteItem(deleteItem);
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -79,6 +86,7 @@ public class BottomSheetUpdateItemDialog extends BottomSheetDialogFragment {
 
     public void initViews(View v) {
         dataActivity = v.findViewById(R.id.dataActivity);
+        dataViewModel = new ViewModelProvider(this).get(DataActivityViewModel.class);
         updateButton = v.findViewById(R.id.buttonUpdate);
         deleteButton = v.findViewById(R.id.buttonDelete);
         gridItemName = v.findViewById(R.id.gridItemName);
@@ -90,9 +98,7 @@ public class BottomSheetUpdateItemDialog extends BottomSheetDialogFragment {
         return gridItemName.getText().toString();
     }
 
-    public String getItemPrice() {
-        return itemPrice.getText().toString();
-    }
+    public String getItemPrice() { return itemPrice.getText().toString(); }
 
     public String getItemCount() {
         return itemCount.getText().toString();

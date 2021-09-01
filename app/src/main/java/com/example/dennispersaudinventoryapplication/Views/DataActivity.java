@@ -83,11 +83,10 @@ public class DataActivity extends AppCompatActivity {
 
     // Load all items from database into the grid
     private void showItemsOnListView() throws ExecutionException, InterruptedException {
-
-        // TODO: Replace dataViewModel.getAllItems() with dataViewModel.loadAllItems()
-
-        GridAdapter gridAdapter = new GridAdapter(DataActivity.this, dataViewModel.getAllItems());
-        grid.setAdapter(gridAdapter);
+        dataViewModel.loadAllItems().observe(this, items -> {
+            GridAdapter gridAdapter = new GridAdapter(DataActivity.this, items);
+            grid.setAdapter(gridAdapter);
+        });
     }
 
 
@@ -95,8 +94,12 @@ public class DataActivity extends AppCompatActivity {
     private void initViews() {
 
         dataActivity = findViewById(R.id.dataActivity);
+
         fabAddItem = findViewById(R.id.fab_addItem);
+        fabAddItem.setTooltipText("Add item");
+
         grid = findViewById(R.id.gridView);
+        grid.setTooltipText("Update item");
 
         dataViewModel = new ViewModelProvider(this).get(DataActivityViewModel.class);
         btmSheetAdd = new BottomSheetAddItemDialog();

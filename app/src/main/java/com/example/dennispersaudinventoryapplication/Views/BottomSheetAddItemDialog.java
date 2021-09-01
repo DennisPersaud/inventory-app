@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.dennispersaudinventoryapplication.Models.Item;
 import com.example.dennispersaudinventoryapplication.R;
@@ -35,26 +36,16 @@ public class BottomSheetAddItemDialog extends BottomSheetDialogFragment {
         initViews(v);
 
         addButton.setOnClickListener(v1 -> {
-
-            // TODO: Fix insert item logic
-
             if (!getItemName().isEmpty() && !getItemPrice().isEmpty() && !getItemCount().isEmpty()) {
-                Log.d("ITEM_NAME:", getItemName());
-                Log.d("ITEM_COUNT:", getItemCount());
-                Log.d("ITEM_PRICE:", getItemPrice());
-                Item newItem = new Item(getItemName(), Integer.parseInt(getItemPrice()), Integer.parseInt(getItemCount()));
-                Log.d("ITEM_OBJECT:", newItem.toString());
-                dataViewModel.insertItem(newItem);
-            } else {
-                Snackbar.make(dataActivity, "Please enter all fields.", Snackbar.LENGTH_SHORT).show();
+                Item newItem = new Item(getItemName(), Integer.parseInt(getItemPrice()), Integer.parseInt(getItemCount())); dataViewModel.insertItem(newItem); } else { Snackbar.make(dataActivity, "Please enter all fields.", Snackbar.LENGTH_SHORT).show();
             }
         });
-
         return v;
     }
 
     private void initViews(View v) {
         dataActivity = v.findViewById(R.id.dataActivity);
+        dataViewModel = new ViewModelProvider(this).get(DataActivityViewModel.class);
         addButton = v.findViewById(R.id.buttonAdd);
         itemName = v.findViewById(R.id.editTextItemName);
         itemPrice = v.findViewById(R.id.editTextItemPrice);
@@ -68,12 +59,10 @@ public class BottomSheetAddItemDialog extends BottomSheetDialogFragment {
 
     public String getItemCount() {
         return itemCount.getText().toString();
-//        return Integer.parseInt(itemCount.toString());
     }
 
     public String getItemPrice() {
         return itemPrice.getText().toString();
-//        return Integer.parseInt(itemPrice.toString());
     }
 
 }
