@@ -37,7 +37,10 @@ public class BottomSheetAddItemDialog extends BottomSheetDialogFragment {
 
         addButton.setOnClickListener(v1 -> {
             if (!getItemName().isEmpty() && !getItemPrice().isEmpty() && !getItemCount().isEmpty()) {
-                Item newItem = new Item(getItemName(), Integer.parseInt(getItemPrice()), Integer.parseInt(getItemCount())); dataViewModel.insertItem(newItem); } else { Snackbar.make(dataActivity, "Please enter all fields.", Snackbar.LENGTH_SHORT).show();
+                Item newItem = new Item(getItemName(), Integer.parseInt(getItemPrice()), Integer.parseInt(getItemCount()));
+                dataViewModel.insertItem(newItem);
+            } else {
+                Snackbar.make(dataActivity, "Please enter all fields.", Snackbar.LENGTH_SHORT).show();
             }
         });
         return v;
