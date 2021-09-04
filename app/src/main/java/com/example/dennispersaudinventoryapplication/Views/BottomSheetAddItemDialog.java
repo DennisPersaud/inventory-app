@@ -1,9 +1,6 @@
 package com.example.dennispersaudinventoryapplication.Views;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +23,7 @@ public class BottomSheetAddItemDialog extends BottomSheetDialogFragment {
     private DataActivityViewModel dataViewModel;
     private View dataActivity;
     private Button addButton;
-    private TextView itemName, itemCount, itemPrice;
+    private TextView addItemName, addItemCount, addItemPrice;
 
     @Nullable
     @Override
@@ -36,8 +33,8 @@ public class BottomSheetAddItemDialog extends BottomSheetDialogFragment {
         initViews(v);
 
         addButton.setOnClickListener(v1 -> {
-            if (!getItemName().isEmpty() && !getItemPrice().isEmpty() && !getItemCount().isEmpty()) {
-                Item newItem = new Item(getItemName(), Integer.parseInt(getItemPrice()), Integer.parseInt(getItemCount()));
+            if (!getAddItemName().isEmpty() && !getAddItemPrice().isEmpty() && !getAddItemCount().isEmpty()) {
+                Item newItem = new Item(getAddItemName(), Integer.parseInt(getAddItemPrice()), Integer.parseInt(getAddItemCount()));
                 dataViewModel.insertItem(newItem);
             } else {
                 Snackbar.make(dataActivity, "Please enter all fields.", Snackbar.LENGTH_SHORT).show();
@@ -50,22 +47,22 @@ public class BottomSheetAddItemDialog extends BottomSheetDialogFragment {
         dataActivity = v.findViewById(R.id.dataActivity);
         dataViewModel = new ViewModelProvider(this).get(DataActivityViewModel.class);
         addButton = v.findViewById(R.id.buttonAdd);
-        itemName = v.findViewById(R.id.editTextItemName);
-        itemPrice = v.findViewById(R.id.editTextItemPrice);
-        itemCount =  v.findViewById(R.id.editTextItemQty);
+        addItemName = v.findViewById(R.id.editTextAddItemName);
+        addItemPrice = v.findViewById(R.id.editTextAddItemPrice);
+        addItemCount =  v.findViewById(R.id.editTextAddItemQty);
 
     }
 
-    public String getItemName() {
-        return itemName.getText().toString();
+    public String getAddItemName() {
+        return addItemName.getText().toString();
     }
 
-    public String getItemCount() {
-        return itemCount.getText().toString();
+    public String getAddItemCount() {
+        return addItemCount.getText().toString();
     }
 
-    public String getItemPrice() {
-        return itemPrice.getText().toString();
+    public String getAddItemPrice() {
+        return addItemPrice.getText().toString();
     }
 
 }

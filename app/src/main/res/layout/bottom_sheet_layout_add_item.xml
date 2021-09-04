@@ -8,7 +8,7 @@
 
 
     <EditText
-        android:id="@+id/editTextItemName"
+        android:id="@+id/editTextAddItemName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -16,7 +16,7 @@
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/editTextItemPrice"
+        android:id="@+id/editTextAddItemPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -24,7 +24,7 @@
         android:inputType="number" />
 
     <EditText
-        android:id="@+id/editTextItemQty"
+        android:id="@+id/editTextAddItemQty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"

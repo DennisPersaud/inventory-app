@@ -23,9 +23,9 @@ import java.util.concurrent.ExecutionException;
 public class BottomSheetUpdateItemDialog extends BottomSheetDialogFragment {
 
     private Button updateButton, deleteButton;
-    private TextView gridItemName, itemPrice, itemCount;
+    private TextView updateItemPrice, updateItemCount;
     private DataActivityViewModel dataViewModel;
-    private View dataActivity;
+    private View dataActivityView;
 
     @Nullable
     @Override
@@ -37,47 +37,30 @@ public class BottomSheetUpdateItemDialog extends BottomSheetDialogFragment {
 
             // TODO: Fix update item logic
 
-            if (!getItemName().isEmpty() && !getItemPrice().isEmpty() && !getItemCount().isEmpty()) {
-                Log.d("TEST", "Update Button Clicked!");
-                // search db for item id by item name
-                // get item from item clicked on grid
+            if (!getUpdateItemPrice().isEmpty() && !getUpdateItemCount().isEmpty()) {
                 try {
-                    Log.d("ITEM_NAME:", getItemName());
-                    Log.d("ITEM_COUNT:", getItemCount());
-                    Log.d("ITEM_PRICE:", getItemPrice());
-                    Item updateItem = dataViewModel.getItemByName(getItemName());
-                    Log.d("ITEM_OBJECT:", updateItem.toString());
-                    // updateItem.setItemName(getItemName());
-                    updateItem.setItemCount(Integer.parseInt(getItemCount()));
-                    updateItem.setItemPrice(Integer.parseInt(getItemPrice()));
+                    Item updateItem = dataViewModel.getItemByName(getGridItemName());
+                    updateItem.setItemCount(Integer.parseInt(getUpdateItemCount()));
+                    updateItem.setItemPrice(Integer.parseInt(getUpdateItemPrice()));
                     dataViewModel.updateItem(updateItem);
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
             } else {
-                Snackbar.make(dataActivity, "Please enter all the fields.", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(dataActivityView, "Please enter all the fields.", Snackbar.LENGTH_SHORT).show();
             }
         });
 
         deleteButton.setOnClickListener(v1 -> {
-
-            //TODO: FIx delete item logic
-
-            if (!getItemName().isEmpty() && !getItemPrice().isEmpty() && !getItemCount().isEmpty()) {
-                Log.d("TEST", "Delete Button Clicked!");
+            if (!getUpdateItemPrice().isEmpty() && !getUpdateItemCount().isEmpty()) {
                 try {
-                    // search db for item id by item name
-                    // Get item from item clicked on grid
-                    Item deleteItem = dataViewModel.getItemByName(getItemName());
+                    Item deleteItem = dataViewModel.getItemByName(getGridItemName());
                     dataViewModel.deleteItem(deleteItem);
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
-
-                    // delete item in db by id
-
             } else {
-                Snackbar.make(dataActivity, "Please enter all the fields.", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(dataActivityView, "Please enter all the fields.", Snackbar.LENGTH_SHORT).show();
             }
         });
 
@@ -85,22 +68,17 @@ public class BottomSheetUpdateItemDialog extends BottomSheetDialogFragment {
     }
 
     public void initViews(View v) {
-        dataActivity = v.findViewById(R.id.dataActivity);
+        dataActivityView = v.findViewById(R.id.dataActivity);
         dataViewModel = new ViewModelProvider(this).get(DataActivityViewModel.class);
         updateButton = v.findViewById(R.id.buttonUpdate);
         deleteButton = v.findViewById(R.id.buttonDelete);
-        gridItemName = v.findViewById(R.id.gridItemName);
-        itemPrice = v.findViewById(R.id.editTextItemPrice);
-        itemCount = v.findViewById(R.id.editTextItemQty);
+        updateItemPrice = v.findViewById(R.id.editTextUpdateItemPrice);
+        updateItemCount = v.findViewById(R.id.editTextUpdateItemQty);
     }
 
-    public String getItemName() {
-        return gridItemName.getText().toString();
-    }
+    public String getGridItemName() { return DataActivity.getClickedItem().getItemName(); }
 
-    public String getItemPrice() { return itemPrice.getText().toString(); }
+    public String getUpdateItemPrice() { return updateItemPrice.getText().toString(); }
 
-    public String getItemCount() {
-        return itemCount.getText().toString();
-    }
+    public String getUpdateItemCount() { return updateItemCount.getText().toString(); }
 }

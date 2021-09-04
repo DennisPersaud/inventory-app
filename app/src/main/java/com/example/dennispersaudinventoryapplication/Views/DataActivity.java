@@ -2,6 +2,7 @@ package com.example.dennispersaudinventoryapplication.Views;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -30,12 +31,13 @@ public class DataActivity extends AppCompatActivity {
     private Button btnAdd, btnDelete, btnUpdate, btnNotify;
     private View dataActivity;
     private GridView grid;
+    private GridAdapter gridAdapter;
     private FloatingActionButton fabAddItem;
     private DataActivityViewModel dataViewModel;
     private BottomSheetAddItemDialog btmSheetAdd;
     private BottomSheetUpdateItemDialog btmSheetUpdate;
+    private static Item clickedItem;
     Intent intent;
-    Item itemData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +62,14 @@ public class DataActivity extends AppCompatActivity {
             btmSheetAdd.show(getSupportFragmentManager(), "additemsheet");
         });
 
-        grid.setOnItemClickListener((parent, view, position, id) ->
-                btmSheetUpdate.show(getSupportFragmentManager(), "updateitemsheet"));
+        // Grid item click listener
+        grid.setOnItemClickListener((parent, view, position, id) -> {
+            //  Pass clicked row position to grid adapter to get item name
+            clickedItem = gridAdapter.getItem(position);
+
+            // Show update item dialog
+            btmSheetUpdate.show(getSupportFragmentManager(), "updateitemsheet");
+        });
     }
 
     @Override
@@ -84,7 +92,7 @@ public class DataActivity extends AppCompatActivity {
     // Load all items from database into the grid
     private void showItemsOnListView() throws ExecutionException, InterruptedException {
         dataViewModel.loadAllItems().observe(this, items -> {
-            GridAdapter gridAdapter = new GridAdapter(DataActivity.this, items);
+            gridAdapter = new GridAdapter(DataActivity.this, items);
             grid.setAdapter(gridAdapter);
         });
     }
@@ -116,5 +124,9 @@ public class DataActivity extends AppCompatActivity {
 
     public String getItemCount() {
         return itemCount.getText().toString();
+    }
+
+    public static Item getClickedItem() {
+        return clickedItem;
     }
 }
