@@ -9,4 +9,6 @@
     <string name="hint_passwordInput">Password</string>
     <string name="text_loginButton">Login</string>
     <string name="text_createAccountButton">Create Account</string>
+    <string name="add_item_button">Add Item Button</string>
+    <string name="notifications_switch">Notifications</string>
 </resources>

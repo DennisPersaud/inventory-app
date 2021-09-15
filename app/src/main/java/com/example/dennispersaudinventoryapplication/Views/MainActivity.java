@@ -72,14 +72,14 @@ public class MainActivity extends AppCompatActivity {
                                     Snackbar.LENGTH_SHORT).show();
 
                         } else {
-                            activityMainBinding.editTextPassword.setError("Enter a 6 character password.");
+                            activityMainBinding.etPassword.setError("Enter a 6 character password.");
                         }
                     } else {
-                        activityMainBinding.editTextUsername.setError("Enter a username.");
-                        activityMainBinding.editTextPassword.setError("Enter a 6 character password.");
+                        activityMainBinding.etUsername.setError("Enter a username.");
+                        activityMainBinding.etPassword.setError("Enter a 6 character password.");
                     }
                 } else {
-                    activityMainBinding.editTextUsername.setError("Username already exists.");
+                    activityMainBinding.etUsername.setError("Username already exists.");
                 }
             } catch (Exception e) {
 
@@ -90,10 +90,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String getUsernameInput() {
-        return activityMainBinding.editTextUsername.getText().toString();
+        return Objects.requireNonNull(activityMainBinding.etUsername.getText()).toString();
     }
 
     private String getPasswordInput() {
-        return activityMainBinding.editTextPassword.getText().toString();
+        return Objects.requireNonNull(activityMainBinding.etPassword.getText()).toString();
     }
 }
