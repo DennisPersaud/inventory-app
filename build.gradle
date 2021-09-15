@@ -38,6 +38,7 @@ ext {
     // UI
     materialVersion = '1.4.0'
     constraintLayoutVersion = '2.0.4'
+    recyclerviewVersion = '1.2.1'
 
     // Testing
     junitVersion = '4.13.2'

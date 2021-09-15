@@ -6,6 +6,10 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
+    buildFeatures {
+        viewBinding true
+    }
+
     defaultConfig {
         applicationId "com.example.dennispersaudinventoryapplication"
         minSdkVersion 28
@@ -44,6 +48,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel:$rootProject.lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-livedata:$rootProject.lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-common-java8:$rootProject.lifecycleVersion"
+    implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerviewVersion"
 
     // UI components
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"

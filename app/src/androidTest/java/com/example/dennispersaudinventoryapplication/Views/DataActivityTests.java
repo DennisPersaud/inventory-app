@@ -2,7 +2,6 @@ package com.example.dennispersaudinventoryapplication.Views;
 
 import android.view.View;
 
-import androidx.test.espresso.DataInteraction;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
@@ -16,17 +15,12 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.hasErrorText;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withChild;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withTagValue;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.hasEntry;
 import static org.junit.Assert.fail;
 
 import com.example.dennispersaudinventoryapplication.R;
-import com.example.dennispersaudinventoryapplication.Utils.GridAdapter;
-import com.example.dennispersaudinventoryapplication.Views.DataActivity;
 
 
 public class DataActivityTests {

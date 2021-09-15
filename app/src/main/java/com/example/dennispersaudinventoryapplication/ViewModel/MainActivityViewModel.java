@@ -13,7 +13,7 @@ import java.util.concurrent.ExecutionException;
 
 public class MainActivityViewModel extends AndroidViewModel {
 
-    public final MainRepository mRepo;
+    private final MainRepository mRepo;
 
     public MainActivityViewModel(Application application) {
         super(application);

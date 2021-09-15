@@ -10,6 +10,7 @@ import androidx.room.Update;
 import com.example.dennispersaudinventoryapplication.Models.User;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @Dao
 public interface UserDao {
@@ -25,17 +26,17 @@ public interface UserDao {
 
     // Return list of all user objects in the database
     @Query("SELECT * FROM user_table")
-    List<User> getAllUsers();
+    List<User> getAllUsers() throws ExecutionException, InterruptedException;
 
     // Return user specified by name
     @Query("SELECT * FROM user_table WHERE user_name = :name")
-    User getUserByName(String name);
+    User getUserByName(String name) throws ExecutionException, InterruptedException;
 
     @Query("SELECT user_password FROM user_table where user_name = :name")
-    String getPasswordByName(String name);
+    String getPasswordByName(String name) throws ExecutionException, InterruptedException;
 
     @Query("SELECT user_name FROM user_table where user_name = :name")
-    String getUsernameByName(String name);
+    String getUsernameByName(String name) throws ExecutionException, InterruptedException;
 
 //    @Query("SELECT * FROM user_table WHERE user_name = :username and user_password = :password")
 //    LiveData<User> getUser(String username, String password);

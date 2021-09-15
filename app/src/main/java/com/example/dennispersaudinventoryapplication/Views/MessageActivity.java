@@ -20,15 +20,17 @@ import androidx.core.content.ContextCompat;
 
 import com.example.dennispersaudinventoryapplication.App;
 import com.example.dennispersaudinventoryapplication.R;
+import com.example.dennispersaudinventoryapplication.databinding.ActivityMessageBinding;
 
 public class MessageActivity extends AppCompatActivity {
 
     // SMS permission constant
     private final int SMS_PERMISSION_CODE = 1;
-
+    SwitchCompat switchCompat;
+    // TODO: Implement message activity view binding
+    ActivityMessageBinding activityMessageBinding;
     // Initialize variables
     private NotificationManagerCompat notificationManager;
-    SwitchCompat switchCompat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +58,11 @@ public class MessageActivity extends AppCompatActivity {
                         Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
                     if (switchCompat.isChecked()) {
 
-                        /* Implement database listener to check if inventory is low:
+                        /* TODO: Implement database listener to check if inventory is low:
                          * I was not able to create the conditional statement to check
                          * if the inventory for an item is low because I could not
-                         * find a way to create a listener for the SQLite database. */
+                         * find a way to create a listener for the SQLite database.
+                         */
 
                         // When switch checked
                         SharedPreferences.Editor editor = getSharedPreferences("save", MODE_PRIVATE).edit();

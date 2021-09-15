@@ -1,7 +1,6 @@
 package com.example.dennispersaudinventoryapplication.Views;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,15 +51,11 @@ public class BottomSheetUpdateItemDialog extends BottomSheetDialogFragment {
         });
 
         deleteButton.setOnClickListener(v1 -> {
-            if (!getUpdateItemPrice().isEmpty() && !getUpdateItemCount().isEmpty()) {
-                try {
-                    Item deleteItem = dataViewModel.getItemByName(getGridItemName());
-                    dataViewModel.deleteItem(deleteItem);
-                } catch (ExecutionException | InterruptedException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                Snackbar.make(dataActivityView, "Please enter all the fields.", Snackbar.LENGTH_SHORT).show();
+            try {
+                Item deleteItem = dataViewModel.getItemByName(getGridItemName());
+                dataViewModel.deleteItem(deleteItem);
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
             }
         });
 
@@ -69,16 +64,23 @@ public class BottomSheetUpdateItemDialog extends BottomSheetDialogFragment {
 
     public void initViews(View v) {
         dataActivityView = v.findViewById(R.id.dataActivity);
-        dataViewModel = new ViewModelProvider(this).get(DataActivityViewModel.class);
+        dataViewModel = new ViewModelProvider(requireActivity()).get(DataActivityViewModel.class);
         updateButton = v.findViewById(R.id.buttonUpdate);
         deleteButton = v.findViewById(R.id.buttonDelete);
         updateItemPrice = v.findViewById(R.id.editTextUpdateItemPrice);
         updateItemCount = v.findViewById(R.id.editTextUpdateItemQty);
     }
 
-    public String getGridItemName() { return DataActivity.getClickedItem().getItemName(); }
+    public String getGridItemName() {
+        return DataActivity.getClickedItem();
+    }
 
-    public String getUpdateItemPrice() { return updateItemPrice.getText().toString(); }
+    public String getUpdateItemPrice() {
+        return updateItemPrice.getText().toString();
+    }
 
-    public String getUpdateItemCount() { return updateItemCount.getText().toString(); }
+    public String getUpdateItemCount() {
+        return updateItemCount.getText().toString();
+    }
+
 }

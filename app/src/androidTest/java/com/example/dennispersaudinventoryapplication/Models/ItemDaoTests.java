@@ -18,6 +18,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -76,7 +77,12 @@ public class ItemDaoTests extends TestCase {
         dao.updateItem(updateItem);
 
         // Get items from database
-        List<Item> insertedItems = dao.getAllItems();
+        List<Item> insertedItems = null;
+        try {
+            insertedItems = dao.getAllItems();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
 
         // Assert item inserted matches db item
         assertThat(insertedItems.get(0).getItemName(), equalTo(updateItem.getItemName()));
@@ -95,7 +101,12 @@ public class ItemDaoTests extends TestCase {
         dao.deleteItem(deleteItem);
 
         // Get inserted item from database
-        List<Item> insertedItems = dao.getAllItems();
+        List<Item> insertedItems = null;
+        try {
+            insertedItems = dao.getAllItems();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
 
         // Assert item inserted matches db item
         assertThat(insertedItems.isEmpty(), is(true));

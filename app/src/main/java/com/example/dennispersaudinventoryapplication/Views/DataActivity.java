@@ -2,53 +2,51 @@ package com.example.dennispersaudinventoryapplication.Views;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.GridView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.dennispersaudinventoryapplication.Models.Item;
+import com.example.dennispersaudinventoryapplication.Adapters.RecyclerAdapter;
 import com.example.dennispersaudinventoryapplication.R;
 import com.example.dennispersaudinventoryapplication.ViewModel.DataActivityViewModel;
-import com.example.dennispersaudinventoryapplication.Utils.GridAdapter;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.dennispersaudinventoryapplication.databinding.ActivityDataBinding;
 
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
-public class DataActivity extends AppCompatActivity {
+public class DataActivity extends AppCompatActivity implements RecyclerAdapter.FragmentCommunicator {
 
     // Initialize variables
-    private TextView itemName, itemPrice, itemCount;
-    private Button btnAdd, btnDelete, btnUpdate, btnNotify;
-    private View dataActivity;
-    private GridView grid;
-    private GridAdapter gridAdapter;
-    private FloatingActionButton fabAddItem;
     private DataActivityViewModel dataViewModel;
     private BottomSheetAddItemDialog btmSheetAdd;
     private BottomSheetUpdateItemDialog btmSheetUpdate;
-    private static Item clickedItem;
+    private static String clickedItem;
     Intent intent;
+    ActivityDataBinding activityDataBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_data);
+        activityDataBinding = ActivityDataBinding.inflate(getLayoutInflater());
+        View dataView = activityDataBinding.getRoot();
+        setContentView(dataView);
 
         // Disable title bar
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
-        // Initialize views
-        initViews();
+        // Initialize data view model provider
+        dataViewModel = new ViewModelProvider(this).get(DataActivityViewModel.class);
+
+        // Set recycler view layout
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
+        activityDataBinding.recyclerView.setLayoutManager(layoutManager);
 
         // Load all items from database into the grid
         try {
@@ -57,19 +55,13 @@ public class DataActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        // Initialize bottom sheet fragments
+        btmSheetAdd = new BottomSheetAddItemDialog();
+        btmSheetUpdate = new BottomSheetUpdateItemDialog();
+
         // Floating action button listener
-        fabAddItem.setOnClickListener(v -> {
-            btmSheetAdd.show(getSupportFragmentManager(), "additemsheet");
-        });
-
-        // Grid item click listener
-        grid.setOnItemClickListener((parent, view, position, id) -> {
-            //  Pass clicked row position to grid adapter to get item name
-            clickedItem = gridAdapter.getItem(position);
-
-            // Show update item dialog
-            btmSheetUpdate.show(getSupportFragmentManager(), "updateitemsheet");
-        });
+        activityDataBinding.fabAddItem.setOnClickListener(v -> btmSheetAdd.show(getSupportFragmentManager(), "additemsheet"));
+        activityDataBinding.fabAddItem.setTooltipText("Add item");
     }
 
     @Override
@@ -89,44 +81,24 @@ public class DataActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    // Load all items from database into the grid
+    // Load all items from database into the recycler view
     private void showItemsOnListView() throws ExecutionException, InterruptedException {
         dataViewModel.loadAllItems().observe(this, items -> {
-            gridAdapter = new GridAdapter(DataActivity.this, items);
-            grid.setAdapter(gridAdapter);
+            RecyclerAdapter recyclerAdapter = new RecyclerAdapter(items, this);
+            activityDataBinding.recyclerView.setAdapter(recyclerAdapter);
         });
     }
 
+    @Override
+    public void respond(int position, String clicked) {
+        clickedItem = clicked;
 
-    // Initialize views
-    private void initViews() {
-
-        dataActivity = findViewById(R.id.dataActivity);
-
-        fabAddItem = findViewById(R.id.fab_addItem);
-        fabAddItem.setTooltipText("Add item");
-
-        grid = findViewById(R.id.gridView);
-        grid.setTooltipText("Update item");
-
-        dataViewModel = new ViewModelProvider(this).get(DataActivityViewModel.class);
-        btmSheetAdd = new BottomSheetAddItemDialog();
-        btmSheetUpdate = new BottomSheetUpdateItemDialog();
+        // TODO: Bundle grid position of item clicked & send to update item fragment
+        btmSheetUpdate.show(getSupportFragmentManager(), "updateitemsheet");
     }
 
-    public String getItemName() {
-        return itemName.getText().toString();
-    }
-
-    public String getItemPrice() {
-        return itemPrice.getText().toString();
-    }
-
-    public String getItemCount() {
-        return itemCount.getText().toString();
-    }
-
-    public static Item getClickedItem() {
+    // TODO: Remove this function after click position has been bundled
+    public static String getClickedItem() {
         return clickedItem;
     }
 }

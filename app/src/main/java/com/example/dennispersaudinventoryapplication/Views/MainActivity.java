@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.dennispersaudinventoryapplication.Models.User;
 import com.example.dennispersaudinventoryapplication.R;
 import com.example.dennispersaudinventoryapplication.ViewModel.MainActivityViewModel;
+import com.example.dennispersaudinventoryapplication.databinding.ActivityMainBinding;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Objects;
@@ -19,9 +20,7 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
 
     // Initialize variables
-    private TextView username, password;
-    private Button buttonLogin, buttonCreateAccount;
-    private View mainActivity;
+    ActivityMainBinding activityMainBinding;
     private MainActivityViewModel mainViewModel;
     private final int counter = 5;
     User userData;
@@ -30,31 +29,38 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        View view = activityMainBinding.getRoot();
+        setContentView(view);
 
-        // Initialize views
-        initViews();
+        // Bind mainActivity
+        // Initialize view model provider
+        mainViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
         // Login button listener
-        buttonLogin.setOnClickListener(v -> {
+        activityMainBinding.buttonLogin.setOnClickListener(v -> {
             try {
 
                 if (getPasswordInput().equals(mainViewModel.getPasswordByName(getUsernameInput()))) {
-                    Snackbar.make(mainActivity, R.string.toast_loginSuccess, Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(activityMainBinding.mainActivity, R.string.toast_loginSuccess,
+                            Snackbar.LENGTH_SHORT).show();
+                    // TODO: Instantiate new inventory for new users
                     intent = new Intent(MainActivity.this, DataActivity.class);
                     startActivity(intent);
                 } else {
 
-                    Snackbar.make(mainActivity, R.string.toast_loginFailed, Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(activityMainBinding.mainActivity, R.string.toast_loginFailed,
+                            Snackbar.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
 
-                Snackbar.make(mainActivity, Objects.requireNonNull(e.getMessage()), Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(activityMainBinding.mainActivity, Objects.requireNonNull(e.getMessage()),
+                        Snackbar.LENGTH_SHORT).show();
             }
         });
 
         // Create account button listener
-        buttonCreateAccount.setOnClickListener(v -> {
+        activityMainBinding.buttonCreateAccount.setOnClickListener(v -> {
             try {
                 if (!getUsernameInput().equals(mainViewModel.getUsernameByName(getUsernameInput()))) {
                     if (!getUsernameInput().isEmpty() && !getPasswordInput().isEmpty()) {
@@ -62,42 +68,32 @@ public class MainActivity extends AppCompatActivity {
 
                             userData = new User(getUsernameInput(), getPasswordInput());
                             mainViewModel.insertUser(userData);
-                            Snackbar.make(mainActivity, R.string.toast_createAccountSuccess, Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(activityMainBinding.mainActivity, R.string.toast_createAccountSuccess,
+                                    Snackbar.LENGTH_SHORT).show();
 
                         } else {
-                            password.setError("Enter a 6 character password.");
+                            activityMainBinding.editTextPassword.setError("Enter a 6 character password.");
                         }
                     } else {
-                        username.setError("Enter a username.");
-                        password.setError("Enter a 6 character password.");
+                        activityMainBinding.editTextUsername.setError("Enter a username.");
+                        activityMainBinding.editTextPassword.setError("Enter a 6 character password.");
                     }
                 } else {
-                    username.setError("Username already exists.");
+                    activityMainBinding.editTextUsername.setError("Username already exists.");
                 }
             } catch (Exception e) {
 
-                Snackbar.make(mainActivity, Objects.requireNonNull(e.getMessage()), Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(activityMainBinding.mainActivity, Objects.requireNonNull(e.getMessage()),
+                        Snackbar.LENGTH_SHORT).show();
             }
         });
     }
 
-    // Initialize views
-    private void initViews() {
-
-        mainActivity = findViewById(R.id.mainActivity);
-        username = findViewById(R.id.editTextUsername);
-        password = findViewById(R.id.editTextPassword);
-        buttonLogin = findViewById(R.id.buttonLogin);
-        buttonCreateAccount = findViewById(R.id.buttonCreateAccount);
-
-        mainViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
-    }
-
     private String getUsernameInput() {
-        return username.getText().toString();
+        return activityMainBinding.editTextUsername.getText().toString();
     }
 
     private String getPasswordInput() {
-        return password.getText().toString();
+        return activityMainBinding.editTextPassword.getText().toString();
     }
 }
