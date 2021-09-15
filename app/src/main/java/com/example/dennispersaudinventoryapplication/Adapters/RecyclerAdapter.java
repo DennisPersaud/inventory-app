@@ -45,9 +45,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.tv_gridItemName.setText(String.valueOf(itemDataSet.get(position).getItemName()));
         holder.tv_gridItemCount.setText(String.valueOf(itemDataSet.get(position).getItemCount()));
         holder.tv_gridItemPrice.setText(String.valueOf(itemDataSet.get(position).getItemPrice()));
-
-        //TODO: Insert Bundle here
-
     }
 
     // Return the size of your dataset (invoked by the layout manager)

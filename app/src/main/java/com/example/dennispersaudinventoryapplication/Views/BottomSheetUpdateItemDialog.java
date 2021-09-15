@@ -33,9 +33,6 @@ public class BottomSheetUpdateItemDialog extends BottomSheetDialogFragment {
         initViews(v);
 
         updateButton.setOnClickListener(v1 -> {
-
-            // TODO: Fix update item logic
-
             if (!getUpdateItemPrice().isEmpty() && !getUpdateItemCount().isEmpty()) {
                 try {
                     Item updateItem = dataViewModel.getItemByName(getGridItemName());
@@ -54,6 +51,7 @@ public class BottomSheetUpdateItemDialog extends BottomSheetDialogFragment {
             try {
                 Item deleteItem = dataViewModel.getItemByName(getGridItemName());
                 dataViewModel.deleteItem(deleteItem);
+                this.dismiss();
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }
@@ -72,7 +70,8 @@ public class BottomSheetUpdateItemDialog extends BottomSheetDialogFragment {
     }
 
     public String getGridItemName() {
-        return DataActivity.getClickedItem();
+        assert this.getArguments() != null;
+        return this.getArguments().getString("itemName");
     }
 
     public String getUpdateItemPrice() {
@@ -82,5 +81,4 @@ public class BottomSheetUpdateItemDialog extends BottomSheetDialogFragment {
     public String getUpdateItemCount() {
         return updateItemCount.getText().toString();
     }
-
 }

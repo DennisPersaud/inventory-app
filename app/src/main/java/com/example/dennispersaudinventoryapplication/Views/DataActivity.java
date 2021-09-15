@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dennispersaudinventoryapplication.Adapters.RecyclerAdapter;
 import com.example.dennispersaudinventoryapplication.R;
@@ -23,13 +22,11 @@ import java.util.concurrent.ExecutionException;
 
 public class DataActivity extends AppCompatActivity implements RecyclerAdapter.FragmentCommunicator {
 
-    // Initialize variables
+    Intent intent;
+    ActivityDataBinding activityDataBinding;
     private DataActivityViewModel dataViewModel;
     private BottomSheetAddItemDialog btmSheetAdd;
     private BottomSheetUpdateItemDialog btmSheetUpdate;
-    private static String clickedItem;
-    Intent intent;
-    ActivityDataBinding activityDataBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +57,7 @@ public class DataActivity extends AppCompatActivity implements RecyclerAdapter.F
         btmSheetUpdate = new BottomSheetUpdateItemDialog();
 
         // Floating action button listener
-        activityDataBinding.fabAddItem.setOnClickListener(v -> btmSheetAdd.show(getSupportFragmentManager(), "additemsheet"));
+        activityDataBinding.fabAddItem.setOnClickListener(v -> btmSheetAdd.show(getSupportFragmentManager(), "addItemSheet"));
         activityDataBinding.fabAddItem.setTooltipText("Add item");
     }
 
@@ -91,14 +88,9 @@ public class DataActivity extends AppCompatActivity implements RecyclerAdapter.F
 
     @Override
     public void respond(int position, String clicked) {
-        clickedItem = clicked;
-
-        // TODO: Bundle grid position of item clicked & send to update item fragment
-        btmSheetUpdate.show(getSupportFragmentManager(), "updateitemsheet");
-    }
-
-    // TODO: Remove this function after click position has been bundled
-    public static String getClickedItem() {
-        return clickedItem;
+        Bundle bundle = new Bundle();
+        bundle.putString("itemName", clicked);
+        btmSheetUpdate.setArguments(bundle);
+        btmSheetUpdate.show(getSupportFragmentManager(), "updateItemSheet");
     }
 }
