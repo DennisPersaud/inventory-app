@@ -1,13 +1,11 @@
 package com.example.dennispersaudinventoryapplication.Views;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.dennispersaudinventoryapplication.Models.User;
 import com.example.dennispersaudinventoryapplication.R;
@@ -19,12 +17,12 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final int counter = 5;
     // Initialize variables
     ActivityMainBinding activityMainBinding;
-    private MainActivityViewModel mainViewModel;
-    private final int counter = 5;
     User userData;
     Intent intent;
+    private MainActivityViewModel mainViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

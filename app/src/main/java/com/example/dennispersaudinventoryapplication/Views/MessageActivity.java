@@ -2,11 +2,12 @@ package com.example.dennispersaudinventoryapplication.Views;
 
 import android.Manifest;
 import android.app.Notification;
-import android.content.DialogInterface;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,9 +19,10 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 
-import com.example.dennispersaudinventoryapplication.App;
 import com.example.dennispersaudinventoryapplication.R;
 import com.example.dennispersaudinventoryapplication.databinding.ActivityMessageBinding;
+
+import java.util.Objects;
 
 public class MessageActivity extends AppCompatActivity {
 
@@ -31,6 +33,8 @@ public class MessageActivity extends AppCompatActivity {
     ActivityMessageBinding activityMessageBinding;
     // Initialize variables
     private NotificationManagerCompat notificationManager;
+    // Notification channel constant
+    public static final String CHANNEL_1_ID = "lowinventory";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +42,10 @@ public class MessageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_message);
 
         // Hide title bar
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
         // Initialize view
-        switchCompat = (SwitchCompat) findViewById(R.id.switchNotifications);
+        switchCompat = findViewById(R.id.switchNotifications);
 
         // Save switch state in shared preferences
         SharedPreferences sharedPreferences = getSharedPreferences("save", MODE_PRIVATE);
@@ -50,51 +54,73 @@ public class MessageActivity extends AppCompatActivity {
         // Reference to Notification manager
         notificationManager = NotificationManagerCompat.from(this);
 
+        // Create notification channel
+        createNotificationChannels();
+
         // Notification switch listener
-        switchCompat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (ContextCompat.checkSelfPermission(MessageActivity.this,
-                        Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
-                    if (switchCompat.isChecked()) {
+        switchCompat.setOnClickListener(v -> {
+            if (ContextCompat.checkSelfPermission(MessageActivity.this,
+                    Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
+                if (switchCompat.isChecked()) {
 
-                        /* TODO: Implement database listener to check if inventory is low:
-                         * I was not able to create the conditional statement to check
-                         * if the inventory for an item is low because I could not
-                         * find a way to create a listener for the SQLite database.
-                         */
+                    /* TODO: Implement database listener to check if inventory is low:
+                     * I was not able to create the conditional statement to check
+                     * if the inventory for an item is low because I could not
+                     * find a way to create a listener for the SQLite database.
+                     */
 
-                        // When switch checked
-                        SharedPreferences.Editor editor = getSharedPreferences("save", MODE_PRIVATE).edit();
-                        editor.putBoolean("value", true);
-                        editor.apply();
-                        switchCompat.setChecked(true);
+                    // When switch checked
+                    SharedPreferences.Editor editor = getSharedPreferences("save", MODE_PRIVATE).edit();
+                    editor.putBoolean("value", true);
+                    editor.apply();
+                    switchCompat.setChecked(true);
 
-                        // Build notification
-                        Notification notification = new NotificationCompat.Builder(MessageActivity.this, App.CHANNEL_1_ID)
-                                .setSmallIcon(R.drawable.ic_alert)
-                                .setContentText("Item inventory is low or out of stock.")
-                                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                                .build();
+                    // Build notification
+                    Notification notification = new NotificationCompat.Builder(MessageActivity.this, CHANNEL_1_ID)
+                            .setSmallIcon(R.drawable.ic_alert)
+                            .setContentText("Item inventory is low or out of stock.")
+                            .setPriority(NotificationCompat.PRIORITY_HIGH)
+                            .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                            .build();
 
-                        // Display notification
-                        notificationManager.notify(1, notification);
-                    } else {
-
-                        // When switch unchecked
-                        SharedPreferences.Editor editor = getSharedPreferences("save", MODE_PRIVATE).edit();
-                        editor.putBoolean("value", false);
-                        editor.apply();
-                        switchCompat.setChecked(false);
-                    }
+                    // Display notification
+                    notificationManager.notify(1, notification);
                 } else {
 
-                    // Permission not granted
-                    requestSMSPermission();
+                    // When switch unchecked
+                    SharedPreferences.Editor editor = getSharedPreferences("save", MODE_PRIVATE).edit();
+                    editor.putBoolean("value", false);
+                    editor.apply();
+                    switchCompat.setChecked(false);
                 }
+            } else {
+
+                // Permission not granted
+                requestSMSPermission();
             }
         });
+    }
+
+    // Create notification channel
+    private void createNotificationChannels(){
+
+        // Check if build version is Oreo or higher
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+
+            // Create notification channel object
+            NotificationChannel lowinventory = new NotificationChannel(
+                    CHANNEL_1_ID,
+                    "lowinventory",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+
+            // Channel settings
+            lowinventory.setDescription("Alert user when inventory low");
+
+            // Reference notification manager and create channel
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(lowinventory);
+        }
     }
 
     // Request user for SMS permission
@@ -102,26 +128,13 @@ public class MessageActivity extends AppCompatActivity {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.SEND_SMS)) {
 
             // Build Permission
+            // If the user chooses Ok grant request
+            // If user chooses cancel dismiss permission
             new AlertDialog.Builder(this)
                     .setTitle("SMS Permission")
                     .setMessage("Permission needed to send SMS notifications")
-                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-
-                        // If the user chooses Ok grant request
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                            ActivityCompat.requestPermissions(MessageActivity.this, new String[]{Manifest.permission.SEND_SMS}, SMS_PERMISSION_CODE);
-                        }
-                    })
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-
-                        // If user chooses cancel dismiss permission
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    })
+                    .setPositiveButton("Ok", (dialog, which) -> ActivityCompat.requestPermissions(MessageActivity.this, new String[]{Manifest.permission.SEND_SMS}, SMS_PERMISSION_CODE))
+                    .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
                     .create()
                     .show();
         } else {
