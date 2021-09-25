@@ -1,5 +1,9 @@
 package com.example.dennispersaudinventoryapplication.Models;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.room.Room;
 import androidx.room.RoomWarnings;
@@ -20,19 +24,14 @@ import org.junit.runner.RunWith;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-
 
 @RunWith(AndroidJUnit4.class)
 public class ItemDaoTests extends TestCase {
 
-    private MainDatabase db;
-    private ItemDao dao;
-
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
+    private MainDatabase db;
+    private ItemDao dao;
 
     @Before
     public void createDb() {
@@ -50,7 +49,7 @@ public class ItemDaoTests extends TestCase {
 
     @Test
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
-    public void test_insertItem_matchItemName() {
+    public void test_insertItem_matchItemName() throws ExecutionException, InterruptedException {
 
         // Insert item into database
         Item item = new Item("testItem", 1, 3);
@@ -65,7 +64,7 @@ public class ItemDaoTests extends TestCase {
 
     @Test
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
-    public void test_updateItem_ReturnTrue() {
+    public void test_updateItem_ReturnTrue() throws ExecutionException, InterruptedException {
 
         // Insert item into database
         Item item = new Item("testItem", 1, 3);
@@ -90,7 +89,7 @@ public class ItemDaoTests extends TestCase {
 
     @Test
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
-    public void test_deleteItem_ReturnTrue() {
+    public void test_deleteItem_ReturnTrue() throws ExecutionException, InterruptedException {
 
         // Insert item into database
         Item item = new Item("testItem", 1, 3);

@@ -1,17 +1,5 @@
 package com.example.dennispersaudinventoryapplication.Views;
 
-import android.content.Context;
-import android.view.View;
-
-import androidx.test.espresso.matcher.ViewMatchers;
-import androidx.test.ext.junit.rules.ActivityScenarioRule;
-import androidx.test.filters.LargeTest;
-import androidx.test.platform.app.InstrumentationRegistry;
-
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
@@ -23,22 +11,30 @@ import static androidx.test.espresso.matcher.ViewMatchers.withHint;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+
+import android.content.Context;
+import android.view.View;
+
+import androidx.test.espresso.matcher.ViewMatchers;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
+import androidx.test.filters.LargeTest;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.example.dennispersaudinventoryapplication.R;
-import com.example.dennispersaudinventoryapplication.Views.MainActivity;
+
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 
 @LargeTest
 public class MainActivityTests {
 
     private static final String USERNAME_TO_BE_TYPED = "Espresso";
     private static final String PASSWORD_TO_BE_TYPED = "Espresso";
-    private View decorView;
-
     @Rule
     public ActivityScenarioRule<MainActivity> activityScenarioRule
             = new ActivityScenarioRule<>(MainActivity.class);
+    private View decorView;
 
     @Before
     public void setUp() {
@@ -86,7 +82,7 @@ public class MainActivityTests {
      */
     @Test
     public void test_visibility_editText_username() {
-        onView(withId(R.id.editTextUsername)).check(matches(isDisplayed()));
+        onView(withId(R.id.et_username)).check(matches(isDisplayed()));
     }
 
     /*
@@ -94,7 +90,7 @@ public class MainActivityTests {
      */
     @Test
     public void test_visibility_editText_password() {
-        onView(withId(R.id.editTextPassword)).check(matches(isDisplayed()));
+        onView(withId(R.id.et_password)).check(matches(isDisplayed()));
     }
 
     /*
@@ -102,7 +98,7 @@ public class MainActivityTests {
      */
     @Test
     public void test_visibility_usernameHint() {
-        onView(withId(R.id.editTextUsername)).check(matches(withHint(R.string.hint_usernameInput)));
+        onView(withId(R.id.et_username)).check(matches(withHint(R.string.hint_usernameInput)));
     }
 
     /*
@@ -110,7 +106,7 @@ public class MainActivityTests {
      */
     @Test
     public void test_visibility_passwordHint() {
-        onView(withId(R.id.editTextPassword)).check(matches(withHint(R.string.hint_passwordInput)));
+        onView(withId(R.id.et_password)).check(matches(withHint(R.string.hint_passwordInput)));
     }
 
     /*
@@ -131,7 +127,7 @@ public class MainActivityTests {
     @Test
     public void test_loginUsernameOnly_returnFailed() {
         // Type text and then press the button.
-        onView(withId(R.id.editTextUsername))
+        onView(withId(R.id.et_username))
                 .perform(typeText(USERNAME_TO_BE_TYPED), closeSoftKeyboard());
         // Click button
         onView(withId(R.id.buttonLogin)).perform(click());
@@ -148,7 +144,7 @@ public class MainActivityTests {
     @Test
     public void test_loginPasswordOnly_returnFailed() {
         // Type text and then press the button.
-        onView(withId(R.id.editTextPassword))
+        onView(withId(R.id.et_password))
                 .perform(typeText(PASSWORD_TO_BE_TYPED), closeSoftKeyboard());
         // Click button
         onView(withId(R.id.buttonLogin)).perform(click());
@@ -165,9 +161,9 @@ public class MainActivityTests {
     @Test
     public void test_loginCredentials_returnSuccess() {
         // Type text and then press the button.
-        onView(withId(R.id.editTextUsername))
+        onView(withId(R.id.et_username))
                 .perform(typeText(USERNAME_TO_BE_TYPED), closeSoftKeyboard());
-        onView(withId(R.id.editTextPassword))
+        onView(withId(R.id.et_password))
                 .perform(typeText(PASSWORD_TO_BE_TYPED), closeSoftKeyboard());
         // Click button
         onView(withId(R.id.buttonLogin)).perform(click());
@@ -187,9 +183,9 @@ public class MainActivityTests {
         // Click button
         onView(withId(R.id.buttonCreateAccount)).perform(click());
         // Check that the error was displayed.
-        onView(withId(R.id.editTextUsername))
+        onView(withId(R.id.et_username))
                 .check(matches(hasErrorText("Enter a username.")));
-        onView(withId(R.id.editTextPassword))
+        onView(withId(R.id.et_password))
                 .check(matches(hasErrorText("Enter a 6 character password.")));
     }
 
@@ -199,14 +195,14 @@ public class MainActivityTests {
     @Test
     public void test_createAccountUsernameOnly_returnFailed() {
         // Given
-        onView(withId(R.id.editTextUsername))
+        onView(withId(R.id.et_username))
                 .perform(typeText(USERNAME_TO_BE_TYPED), closeSoftKeyboard());
         // When
         onView(withId(R.id.buttonCreateAccount)).perform(click());
         // Then
-        onView(withId(R.id.editTextUsername))
+        onView(withId(R.id.et_username))
                 .check(matches(hasErrorText("Enter a username.")));
-        onView(withId(R.id.editTextPassword))
+        onView(withId(R.id.et_password))
                 .check(matches(hasErrorText("Enter a 6 character password.")));
     }
 
@@ -216,14 +212,14 @@ public class MainActivityTests {
     @Test
     public void test_createAccountPasswordOnly_returnFailed() {
         // Given
-        onView(withId(R.id.editTextPassword))
+        onView(withId(R.id.et_password))
                 .perform(typeText(PASSWORD_TO_BE_TYPED), closeSoftKeyboard());
         // When
         onView(withId(R.id.buttonCreateAccount)).perform(click());
         // Then
-        onView(withId(R.id.editTextUsername))
+        onView(withId(R.id.et_username))
                 .check(matches(hasErrorText("Enter a username.")));
-        onView(withId(R.id.editTextPassword))
+        onView(withId(R.id.et_password))
                 .check(matches(hasErrorText("Enter a 6 character password.")));
     }
 
@@ -233,9 +229,9 @@ public class MainActivityTests {
     @Test
     public void test_createAccountCredentials_returnSuccess() {
         // Given
-        onView(withId(R.id.editTextUsername))
+        onView(withId(R.id.et_username))
                 .perform(typeText(USERNAME_TO_BE_TYPED), closeSoftKeyboard());
-        onView(withId(R.id.editTextPassword))
+        onView(withId(R.id.et_password))
                 .perform(typeText(PASSWORD_TO_BE_TYPED), closeSoftKeyboard());
         // When
         onView(withId(R.id.buttonCreateAccount)).perform(click());
@@ -252,14 +248,14 @@ public class MainActivityTests {
     @Test
     public void test_createAccountShortPassword_returnFail() {
         // Given
-        onView(withId(R.id.editTextUsername))
+        onView(withId(R.id.et_username))
                 .perform(typeText("espresso"), closeSoftKeyboard());
-        onView(withId(R.id.editTextPassword))
+        onView(withId(R.id.et_password))
                 .perform(typeText("123"), closeSoftKeyboard());
         // When
         onView(withId(R.id.buttonCreateAccount)).perform(click());
         // Then
-        onView(withId(R.id.editTextPassword))
+        onView(withId(R.id.et_password))
                 .check(matches(hasErrorText("Enter a 6 character password.")));
     }
 
@@ -269,35 +265,15 @@ public class MainActivityTests {
     @Test
     public void test_createAccountUserExists_returnFail() {
         // Given
-        onView(withId(R.id.editTextUsername))
+        onView(withId(R.id.et_username))
                 .perform(typeText("espresso"), closeSoftKeyboard());
-        onView(withId(R.id.editTextPassword))
+        onView(withId(R.id.et_password))
                 .perform(typeText("123456"), closeSoftKeyboard());
         // When
         onView(withId(R.id.buttonCreateAccount)).perform(click());
         onView(withId(R.id.buttonCreateAccount)).perform(click());
         // Then
-        onView(withId(R.id.editTextUsername))
+        onView(withId(R.id.et_username))
                 .check(matches(hasErrorText("Username already exists.")));
     }
 }
-
-
-/*
- * Test 3
- */
-//    @Ignore
-//    @Test
-//    public void createAccount_newActivity() {
-//        fail("Not implemented correctly");
-//        // Given
-//        onView(withId(R.id.editTextUsername))
-//                .perform(typeText(USERNAME_TO_BE_TYPED), closeSoftKeyboard());
-//        onView(withId(R.id.editTextPassword))
-//                .perform(typeText(PASSWORD_TO_BE_TYPED), closeSoftKeyboard());
-//        // When
-//        onView(withId(R.id.buttonLogin)).perform(click());
-//        // Then
-//        onView(withId(R.id.editTextUsername))
-//                .check(matches(withText(USERNAME_TO_BE_TYPED)));
-//    }

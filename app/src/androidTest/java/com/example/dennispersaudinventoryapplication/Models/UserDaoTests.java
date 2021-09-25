@@ -1,5 +1,9 @@
 package com.example.dennispersaudinventoryapplication.Models;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.room.Room;
 import androidx.room.RoomWarnings;
@@ -18,20 +22,16 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.List;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
+import java.util.concurrent.ExecutionException;
 
 
 @RunWith(AndroidJUnit4.class)
 public class UserDaoTests extends TestCase {
 
-    private MainDatabase db;
-    private UserDao dao;
-
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
+    private MainDatabase db;
+    private UserDao dao;
 
     @Before
     public void createDb() {
@@ -49,7 +49,7 @@ public class UserDaoTests extends TestCase {
 
     @Test
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
-    public void test_insertUser_matchUsername() {
+    public void test_insertUser_matchUsername() throws ExecutionException, InterruptedException {
 
         // Insert user into database
         User user = new User("Dennis", "123");
@@ -64,7 +64,7 @@ public class UserDaoTests extends TestCase {
 
     @Test
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
-    public void test_insertUser_matchPassword() {
+    public void test_insertUser_matchPassword() throws ExecutionException, InterruptedException {
 
         // Insert user into database
         User user = new User("Dennis", "123");
@@ -79,7 +79,7 @@ public class UserDaoTests extends TestCase {
 
     @Test
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
-    public void test_getPasswordByName() {
+    public void test_getPasswordByName() throws ExecutionException, InterruptedException {
 
         // Insert user into database
         User user = new User("Dennis", "123");
@@ -94,7 +94,7 @@ public class UserDaoTests extends TestCase {
 
     @Test
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
-    public void test_updateUser_ReturnTrue() {
+    public void test_updateUser_ReturnTrue() throws ExecutionException, InterruptedException {
 
         // Insert user into database
         User user = new User("Dennis", "123");
@@ -114,7 +114,7 @@ public class UserDaoTests extends TestCase {
 
     @Test
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
-    public void test_deleteUser_ReturnTrue() {
+    public void test_deleteUser_ReturnTrue() throws ExecutionException, InterruptedException {
 
         // Insert user into database
         User user = new User("Dennis", "123");
