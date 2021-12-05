@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -34,7 +33,6 @@ public class MessageFragment extends Fragment {
     public static final String CHANNEL_1_ID = "lowinventory";
     // SMS permission constant
     private final int SMS_PERMISSION_CODE = 1;
-    SwitchCompat switchCompat;
     MessageFragmentBinding messageFragmentBinding;
     // Initialize variables
     private NotificationManagerCompat notificationManager;
@@ -67,7 +65,7 @@ public class MessageFragment extends Fragment {
         messageFragmentBinding.switchNotifications.setOnClickListener(v -> {
             if (ContextCompat.checkSelfPermission(requireActivity(),
                     Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
-                if (switchCompat.isChecked()) {
+                if (messageFragmentBinding.switchNotifications.isChecked()) {
 
                     /* TODO: Implement database listener to check if inventory is low:
                      * I was not able to create the conditional statement to check
@@ -79,7 +77,7 @@ public class MessageFragment extends Fragment {
                     SharedPreferences.Editor editor = requireActivity().getSharedPreferences("save", MODE_PRIVATE).edit();
                     editor.putBoolean("value", true);
                     editor.apply();
-                    switchCompat.setChecked(true);
+                    messageFragmentBinding.switchNotifications.setChecked(true);
 
                     // Build notification
                     Notification notification = new NotificationCompat.Builder(requireActivity(), CHANNEL_1_ID)
@@ -97,7 +95,7 @@ public class MessageFragment extends Fragment {
                     SharedPreferences.Editor editor = requireActivity().getSharedPreferences("save", MODE_PRIVATE).edit();
                     editor.putBoolean("value", false);
                     editor.apply();
-                    switchCompat.setChecked(false);
+                    messageFragmentBinding.switchNotifications.setChecked(false);
                 }
             } else {
 
