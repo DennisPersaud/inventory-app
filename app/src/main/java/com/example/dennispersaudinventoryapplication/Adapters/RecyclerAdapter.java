@@ -1,6 +1,7 @@
 package com.example.dennispersaudinventoryapplication.Adapters;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -56,6 +57,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     // Interface to communicate data from view holder to fragments
     public interface FragmentCommunicator {
+        boolean onCreateOptionsMenu(Menu menu);
+
         void respond(int position, String name);
     }
 

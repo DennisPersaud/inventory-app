@@ -15,14 +15,13 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 import com.example.dennispersaudinventoryapplication.R;
-import com.example.dennispersaudinventoryapplication.Views.MessageActivity;
 
 public class MessageActivityTests {
     private View decorView;
 
     @Rule
-    public ActivityScenarioRule<MessageActivity> activityScenarioRule
-            = new ActivityScenarioRule<>(MessageActivity.class);
+    public ActivityScenarioRule<MessageFragment> activityScenarioRule
+            = new ActivityScenarioRule<>(MessageFragment.class);
 
     @Before
     public void setUp() {

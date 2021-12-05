@@ -44,7 +44,7 @@ public class BottomSheetAddItemDialog extends BottomSheetDialogFragment {
     }
 
     private void initViews(View v) {
-        dataActivity = v.findViewById(R.id.dataActivity);
+        dataActivity = v.findViewById(R.id.dataFragment);
         dataViewModel = new ViewModelProvider(this).get(DataActivityViewModel.class);
         addButton = v.findViewById(R.id.buttonAdd);
         addItemName = v.findViewById(R.id.editTextAddItemName);

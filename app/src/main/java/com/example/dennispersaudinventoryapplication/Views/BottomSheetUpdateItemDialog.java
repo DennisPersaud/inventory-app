@@ -61,7 +61,7 @@ public class BottomSheetUpdateItemDialog extends BottomSheetDialogFragment {
     }
 
     public void initViews(View v) {
-        dataActivityView = v.findViewById(R.id.dataActivity);
+        dataActivityView = v.findViewById(R.id.dataFragment);
         dataViewModel = new ViewModelProvider(requireActivity()).get(DataActivityViewModel.class);
         updateButton = v.findViewById(R.id.buttonUpdate);
         deleteButton = v.findViewById(R.id.buttonDelete);

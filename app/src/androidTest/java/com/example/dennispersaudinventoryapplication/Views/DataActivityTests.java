@@ -21,8 +21,8 @@ import org.junit.Test;
 
 public class DataActivityTests {
     @Rule
-    public ActivityScenarioRule<DataActivity> activityScenarioRule
-            = new ActivityScenarioRule<>(DataActivity.class);
+    public ActivityScenarioRule<DataFragment> activityScenarioRule
+            = new ActivityScenarioRule<>(DataFragment.class);
     private View decorView;
 
     @Before
