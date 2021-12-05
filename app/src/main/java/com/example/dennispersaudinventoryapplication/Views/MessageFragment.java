@@ -1,6 +1,9 @@
 package com.example.dennispersaudinventoryapplication.Views;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -8,58 +11,61 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import com.example.dennispersaudinventoryapplication.R;
-import com.example.dennispersaudinventoryapplication.databinding.ActivityMessageBinding;
+import com.example.dennispersaudinventoryapplication.databinding.MessageFragmentBinding;
+import com.google.android.material.snackbar.Snackbar;
 
-import java.util.Objects;
+public class MessageFragment extends Fragment {
 
-public class MessageActivity extends AppCompatActivity {
 
+    // Notification channel constant
+    public static final String CHANNEL_1_ID = "lowinventory";
     // SMS permission constant
     private final int SMS_PERMISSION_CODE = 1;
     SwitchCompat switchCompat;
-    // TODO: Implement message activity view binding
-    ActivityMessageBinding activityMessageBinding;
+    MessageFragmentBinding messageFragmentBinding;
     // Initialize variables
     private NotificationManagerCompat notificationManager;
-    // Notification channel constant
-    public static final String CHANNEL_1_ID = "lowinventory";
+
+    public MessageFragment() {
+        super(R.layout.message_fragment);
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(
+            @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_message);
+//        requireActivity().setContentView(R.layout.message_fragment);
+        messageFragmentBinding = MessageFragmentBinding.inflate(inflater, container, false);
 
         // Hide title bar
-        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-
-        // Initialize view
-        switchCompat = findViewById(R.id.switchNotifications);
+//        requireActivity().getActionBar().setDisplayShowTitleEnabled(false);
 
         // Save switch state in shared preferences
-        SharedPreferences sharedPreferences = getSharedPreferences("save", MODE_PRIVATE);
-        switchCompat.setChecked(sharedPreferences.getBoolean("value", true));
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("save", MODE_PRIVATE);
+        messageFragmentBinding.switchNotifications.setChecked(sharedPreferences.getBoolean("value", true));
 
         // Reference to Notification manager
-        notificationManager = NotificationManagerCompat.from(this);
+        notificationManager = NotificationManagerCompat.from(requireActivity());
 
         // Create notification channel
         createNotificationChannels();
 
         // Notification switch listener
-        switchCompat.setOnClickListener(v -> {
-            if (ContextCompat.checkSelfPermission(MessageActivity.this,
+        messageFragmentBinding.switchNotifications.setOnClickListener(v -> {
+            if (ContextCompat.checkSelfPermission(requireActivity(),
                     Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
                 if (switchCompat.isChecked()) {
 
@@ -70,13 +76,13 @@ public class MessageActivity extends AppCompatActivity {
                      */
 
                     // When switch checked
-                    SharedPreferences.Editor editor = getSharedPreferences("save", MODE_PRIVATE).edit();
+                    SharedPreferences.Editor editor = requireActivity().getSharedPreferences("save", MODE_PRIVATE).edit();
                     editor.putBoolean("value", true);
                     editor.apply();
                     switchCompat.setChecked(true);
 
                     // Build notification
-                    Notification notification = new NotificationCompat.Builder(MessageActivity.this, CHANNEL_1_ID)
+                    Notification notification = new NotificationCompat.Builder(requireActivity(), CHANNEL_1_ID)
                             .setSmallIcon(R.drawable.ic_alert)
                             .setContentText("Item inventory is low or out of stock.")
                             .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -88,7 +94,7 @@ public class MessageActivity extends AppCompatActivity {
                 } else {
 
                     // When switch unchecked
-                    SharedPreferences.Editor editor = getSharedPreferences("save", MODE_PRIVATE).edit();
+                    SharedPreferences.Editor editor = requireActivity().getSharedPreferences("save", MODE_PRIVATE).edit();
                     editor.putBoolean("value", false);
                     editor.apply();
                     switchCompat.setChecked(false);
@@ -99,13 +105,14 @@ public class MessageActivity extends AppCompatActivity {
                 requestSMSPermission();
             }
         });
+        return messageFragmentBinding.getRoot();
     }
 
     // Create notification channel
-    private void createNotificationChannels(){
+    private void createNotificationChannels() {
 
         // Check if build version is Oreo or higher
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
             // Create notification channel object
             NotificationChannel lowinventory = new NotificationChannel(
@@ -118,28 +125,28 @@ public class MessageActivity extends AppCompatActivity {
             lowinventory.setDescription("Alert user when inventory low");
 
             // Reference notification manager and create channel
-            NotificationManager manager = getSystemService(NotificationManager.class);
+            NotificationManager manager = requireActivity().getSystemService(NotificationManager.class);
             manager.createNotificationChannel(lowinventory);
         }
     }
 
     // Request user for SMS permission
     private void requestSMSPermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.SEND_SMS)) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.SEND_SMS)) {
 
             // Build Permission
             // If the user chooses Ok grant request
             // If user chooses cancel dismiss permission
-            new AlertDialog.Builder(this)
+            new AlertDialog.Builder(requireActivity())
                     .setTitle("SMS Permission")
                     .setMessage("Permission needed to send SMS notifications")
-                    .setPositiveButton("Ok", (dialog, which) -> ActivityCompat.requestPermissions(MessageActivity.this, new String[]{Manifest.permission.SEND_SMS}, SMS_PERMISSION_CODE))
+                    .setPositiveButton("Ok", (dialog, which) -> ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.SEND_SMS}, SMS_PERMISSION_CODE))
                     .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
                     .create()
                     .show();
         } else {
 
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, SMS_PERMISSION_CODE);
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.SEND_SMS}, SMS_PERMISSION_CODE);
         }
     }
 
@@ -150,10 +157,12 @@ public class MessageActivity extends AppCompatActivity {
         if (requestCode == SMS_PERMISSION_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                Toast.makeText(this, "Permission GRANTED.", Toast.LENGTH_SHORT).show();
+                Snackbar.make(messageFragmentBinding.messageActivity, "Permission Granted",
+                        Snackbar.LENGTH_SHORT).show();
             } else {
 
-                Toast.makeText(this, "Permission DENIED.", Toast.LENGTH_SHORT).show();
+                Snackbar.make(messageFragmentBinding.messageActivity, "Permission Denied",
+                        Snackbar.LENGTH_SHORT).show();
             }
         }
     }

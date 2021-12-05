@@ -1,49 +1,50 @@
 package com.example.dennispersaudinventoryapplication.Views;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.dennispersaudinventoryapplication.Adapters.RecyclerAdapter;
 import com.example.dennispersaudinventoryapplication.R;
 import com.example.dennispersaudinventoryapplication.ViewModel.DataActivityViewModel;
-import com.example.dennispersaudinventoryapplication.databinding.ActivityDataBinding;
+import com.example.dennispersaudinventoryapplication.databinding.DataFragmentBinding;
 
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
-public class DataActivity extends AppCompatActivity implements RecyclerAdapter.FragmentCommunicator {
-
-    Intent intent;
-    ActivityDataBinding activityDataBinding;
+public class DataFragment extends Fragment implements RecyclerAdapter.FragmentCommunicator {
+    DataFragmentBinding dataFragmentBinding;
     private DataActivityViewModel dataViewModel;
     private BottomSheetAddItemDialog btmSheetAdd;
     private BottomSheetUpdateItemDialog btmSheetUpdate;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(
+            @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityDataBinding = ActivityDataBinding.inflate(getLayoutInflater());
-        View dataView = activityDataBinding.getRoot();
-        setContentView(dataView);
+        setHasOptionsMenu(true);
+//        dataFragmentBinding = DataFragmentBinding.inflate(getLayoutInflater());
+        dataFragmentBinding = DataFragmentBinding.inflate(inflater, container, false);
 
         // Disable title bar
-        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
         // Initialize data view model provider
         dataViewModel = new ViewModelProvider(this).get(DataActivityViewModel.class);
 
         // Set recycler view layout
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
-        activityDataBinding.recyclerView.setLayoutManager(layoutManager);
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 3);
+        dataFragmentBinding.recyclerView.setLayoutManager(layoutManager);
 
         // Load all items from database into the grid
         try {
@@ -57,32 +58,51 @@ public class DataActivity extends AppCompatActivity implements RecyclerAdapter.F
         btmSheetUpdate = new BottomSheetUpdateItemDialog();
 
         // Floating action button listener
-        activityDataBinding.fabAddItem.setOnClickListener(v -> btmSheetAdd.show(getSupportFragmentManager(), "addItemSheet"));
-        activityDataBinding.fabAddItem.setTooltipText("Add item");
+        dataFragmentBinding.fabAddItem.setOnClickListener(v -> btmSheetAdd.show(getChildFragmentManager(), "addItemSheet"));
+        dataFragmentBinding.fabAddItem.setTooltipText("Add item");
+
+        return dataFragmentBinding.getRoot();
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        if (dataFragmentBinding != null) {
+            dataFragmentBinding.getRoot().removeAllViews();
+        }
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_data, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_data, menu);
-        return true;
+//        MenuInflater inflater = requireActivity().getMenuInflater();
+//        inflater.inflate(R.menu.menu_data, menu);
+        return false;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.menu) {
             // Start MessageActivity on button click
-            intent = new Intent(DataActivity.this, MessageActivity.class);
-            startActivity(intent);
+            Log.d("MESSAGE: ", "THIS CODE WAS EXECUTED");
+            ((NavigationHost) requireActivity()).navigateTo(
+                    new MessageFragment(), false);
         }
-        return super.onOptionsItemSelected(item);
+//        return super.onOptionsItemSelected(item);
+        return false;
     }
 
     // Load all items from database into the recycler view
     private void showItemsOnListView() throws ExecutionException, InterruptedException {
-        dataViewModel.loadAllItems().observe(this, items -> {
+        dataViewModel.loadAllItems().observe(requireActivity(), items -> {
             RecyclerAdapter recyclerAdapter = new RecyclerAdapter(items, this);
-            activityDataBinding.recyclerView.setAdapter(recyclerAdapter);
+            dataFragmentBinding.recyclerView.setAdapter(recyclerAdapter);
         });
     }
 
@@ -91,6 +111,6 @@ public class DataActivity extends AppCompatActivity implements RecyclerAdapter.F
         Bundle bundle = new Bundle();
         bundle.putString("itemName", clicked);
         btmSheetUpdate.setArguments(bundle);
-        btmSheetUpdate.show(getSupportFragmentManager(), "updateItemSheet");
+        btmSheetUpdate.show(getChildFragmentManager(), "updateItemSheet");
     }
 }
