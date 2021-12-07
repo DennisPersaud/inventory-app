@@ -9,7 +9,6 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +26,6 @@ import com.example.dennispersaudinventoryapplication.databinding.MessageFragment
 import com.google.android.material.snackbar.Snackbar;
 
 public class MessageFragment extends Fragment {
-
 
     // Notification channel constant
     public static final String CHANNEL_1_ID = "lowinventory";
@@ -110,22 +108,20 @@ public class MessageFragment extends Fragment {
     private void createNotificationChannels() {
 
         // Check if build version is Oreo or higher
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-            // Create notification channel object
-            NotificationChannel lowinventory = new NotificationChannel(
-                    CHANNEL_1_ID,
-                    "lowinventory",
-                    NotificationManager.IMPORTANCE_HIGH
-            );
+        // Create notification channel object
+        NotificationChannel lowinventory = new NotificationChannel(
+                CHANNEL_1_ID,
+                "lowinventory",
+                NotificationManager.IMPORTANCE_HIGH
+        );
 
-            // Channel settings
-            lowinventory.setDescription("Alert user when inventory low");
+        // Channel settings
+        lowinventory.setDescription("Alert user when inventory low");
 
-            // Reference notification manager and create channel
-            NotificationManager manager = requireActivity().getSystemService(NotificationManager.class);
-            manager.createNotificationChannel(lowinventory);
-        }
+        // Reference notification manager and create channel
+        NotificationManager manager = requireActivity().getSystemService(NotificationManager.class);
+        manager.createNotificationChannel(lowinventory);
     }
 
     // Request user for SMS permission

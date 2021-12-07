@@ -39,7 +39,7 @@ public class LoginFragment extends Fragment {
                             Snackbar.LENGTH_SHORT).show();
                     loginFragmentBinding.getRoot().removeAllViews();
                     ((NavigationHost) requireActivity()).navigateTo(
-                            new DataFragment(), false); // Navigate to the next Fragment
+                            new DataFragment(), true); // Navigate to the next Fragment
                 } else {
                     loginFragmentBinding.etPassword.setError(getString(R.string.toast_loginFailed));
                 }

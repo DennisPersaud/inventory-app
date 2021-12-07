@@ -92,7 +92,7 @@ public class DataFragment extends Fragment implements RecyclerAdapter.FragmentCo
             // Start MessageActivity on button click
             Log.d("MESSAGE: ", "THIS CODE WAS EXECUTED");
             ((NavigationHost) requireActivity()).navigateTo(
-                    new MessageFragment(), false);
+                    new MessageFragment(), true);
         }
 //        return super.onOptionsItemSelected(item);
         return false;

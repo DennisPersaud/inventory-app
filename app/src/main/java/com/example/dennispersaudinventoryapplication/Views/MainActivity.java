@@ -1,21 +1,12 @@
 package com.example.dennispersaudinventoryapplication.Views;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.example.dennispersaudinventoryapplication.Models.User;
 import com.example.dennispersaudinventoryapplication.R;
-import com.example.dennispersaudinventoryapplication.ViewModel.MainActivityViewModel;
-import com.example.dennispersaudinventoryapplication.databinding.ActivityMainBinding;
-import com.google.android.material.snackbar.Snackbar;
-
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements NavigationHost {
 
