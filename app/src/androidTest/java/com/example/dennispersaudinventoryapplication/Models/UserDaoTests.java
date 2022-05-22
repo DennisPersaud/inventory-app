@@ -10,8 +10,9 @@ import androidx.room.RoomWarnings;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.example.dennispersaudinventoryapplication.Database.MainDatabase;
-import com.example.dennispersaudinventoryapplication.Database.UserDao;
+import com.example.dennispersaudinventoryapplication.data.AppDatabase;
+import com.example.dennispersaudinventoryapplication.data.user.User;
+import com.example.dennispersaudinventoryapplication.data.user.UserDao;
 
 import junit.framework.TestCase;
 
@@ -30,13 +31,13 @@ public class UserDaoTests extends TestCase {
 
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
-    private MainDatabase db;
+    private AppDatabase db;
     private UserDao dao;
 
     @Before
     public void createDb() {
         this.db = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getInstrumentation().getContext(),
-                MainDatabase.class)
+                AppDatabase.class)
                 .allowMainThreadQueries()
                 .build();
         dao = db.userDao();
