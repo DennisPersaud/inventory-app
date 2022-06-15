@@ -26,7 +26,6 @@ public class LoginFragment extends Fragment {
 
     private MainActivityViewModel mainViewModel;
     LoginFragmentBinding loginFragmentBinding;
-    DataFragment dataFragment;
     User user;
 
 
@@ -36,7 +35,6 @@ public class LoginFragment extends Fragment {
 
         loginFragmentBinding = LoginFragmentBinding.inflate(inflater, container, false);
         mainViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
-        dataFragment = (DataFragment) getChildFragmentManager().findFragmentById(R.id.dataFragment);
 
         loginFragmentBinding.buttonLogin.setOnClickListener(v -> {
             try {
@@ -48,7 +46,7 @@ public class LoginFragment extends Fragment {
                             getString(R.string.toast_loginSuccess));
                     loginFragmentBinding.getRoot().removeAllViews();
                     ((NavigationHost) requireActivity()).navigateTo(
-                            dataFragment, true); // Navigate to the next Fragment
+                            new DataFragment(), true); // Navigate to the next Fragment
                 } else {
                     loginFragmentBinding.etPassword.setError(getString(R.string.toast_loginFailed));
                 }
@@ -100,11 +98,11 @@ public class LoginFragment extends Fragment {
         return Objects.requireNonNull(loginFragmentBinding.etPassword.getText()).toString();
     }
 
-//    public static LoginFragment getLoginFragment() {
-//        return new LoginFragment();
-//    }
+    public static LoginFragment getLoginFragment() {
+        return new LoginFragment();
+    }
 
-//    private DataFragment getDataFragment() {
-//        return new DataFragment();
-//    }
+    private DataFragment getDataFragment() {
+        return new DataFragment();
+    }
 }
