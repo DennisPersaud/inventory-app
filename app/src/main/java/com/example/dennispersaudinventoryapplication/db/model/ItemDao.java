@@ -1,4 +1,4 @@
-package com.example.dennispersaudinventoryapplication.data.item;
+package com.example.dennispersaudinventoryapplication.db.model;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;

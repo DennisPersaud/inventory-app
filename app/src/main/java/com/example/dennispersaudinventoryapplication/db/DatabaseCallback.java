@@ -1,15 +1,15 @@
-package com.example.dennispersaudinventoryapplication.data;
+package com.example.dennispersaudinventoryapplication.db;
 
-import static com.example.dennispersaudinventoryapplication.data.AppDatabase.getDatabaseWriterExecutor;
+import static com.example.dennispersaudinventoryapplication.db.AppDatabase.getDatabaseWriterExecutor;
 
 import androidx.annotation.NonNull;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.example.dennispersaudinventoryapplication.data.item.Item;
-import com.example.dennispersaudinventoryapplication.data.item.ItemDao;
-import com.example.dennispersaudinventoryapplication.data.user.User;
-import com.example.dennispersaudinventoryapplication.data.user.UserDao;
+import com.example.dennispersaudinventoryapplication.db.model.Item;
+import com.example.dennispersaudinventoryapplication.db.model.ItemDao;
+import com.example.dennispersaudinventoryapplication.db.model.User;
+import com.example.dennispersaudinventoryapplication.db.model.UserDao;
 
 import org.jetbrains.annotations.NotNull;
 

@@ -1,4 +1,4 @@
-package com.example.dennispersaudinventoryapplication.Models;
+package com.example.dennispersaudinventoryapplication.db.model;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -10,9 +10,9 @@ import androidx.room.RoomWarnings;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.example.dennispersaudinventoryapplication.data.AppDatabase;
-import com.example.dennispersaudinventoryapplication.data.user.User;
-import com.example.dennispersaudinventoryapplication.data.user.UserDao;
+import com.example.dennispersaudinventoryapplication.db.AppDatabase;
+import com.example.dennispersaudinventoryapplication.db.model.User;
+import com.example.dennispersaudinventoryapplication.db.model.UserDao;
 
 import junit.framework.TestCase;
 
@@ -27,7 +27,7 @@ import java.util.concurrent.ExecutionException;
 
 
 @RunWith(AndroidJUnit4.class)
-public class UserDaoTests extends TestCase {
+public class UserDaoTest extends TestCase {
 
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
@@ -35,8 +35,8 @@ public class UserDaoTests extends TestCase {
     private UserDao dao;
 
     @Before
-    public void createDb() {
-        this.db = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getInstrumentation().getContext(),
+    public void setup() {
+        db = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getInstrumentation().getContext(),
                 AppDatabase.class)
                 .allowMainThreadQueries()
                 .build();
@@ -44,7 +44,7 @@ public class UserDaoTests extends TestCase {
     }
 
     @After
-    public void closeDb() {
+    public void teardown() {
         db.close();
     }
 

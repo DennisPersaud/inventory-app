@@ -7,24 +7,21 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.example.dennispersaudinventoryapplication.data.item.Item;
+import com.example.dennispersaudinventoryapplication.db.model.Item;
+import com.example.dennispersaudinventoryapplication.databinding.BottomSheetLayoutUpdateItemBinding;
 import com.example.dennispersaudinventoryapplication.utils.StandardMessages;
 import com.example.dennispersaudinventoryapplication.utils.Validator;
 import com.example.dennispersaudinventoryapplication.vm.DataActivityViewModel;
-import com.example.dennispersaudinventoryapplication.databinding.BottomSheetLayoutUpdateItemBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.concurrent.ExecutionException;
 
-import javax.inject.Inject;
-
-import dagger.hilt.android.AndroidEntryPoint;
-
 public class BottomSheetUpdateItemDialog extends BottomSheetDialogFragment {
 
     BottomSheetLayoutUpdateItemBinding bottomSheetLayoutUpdateItemBinding;
-    DataActivityViewModel dataActivityViewModel;
+    private DataActivityViewModel dataActivityViewModel;
     Item updateItem;
     Item deleteItem;
 
@@ -33,6 +30,7 @@ public class BottomSheetUpdateItemDialog extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         bottomSheetLayoutUpdateItemBinding = BottomSheetLayoutUpdateItemBinding.inflate(inflater, container, false);
+        dataActivityViewModel = new ViewModelProvider(this).get(DataActivityViewModel.class);
 
         bottomSheetLayoutUpdateItemBinding.buttonUpdate.setOnClickListener(v1 -> {
             try {

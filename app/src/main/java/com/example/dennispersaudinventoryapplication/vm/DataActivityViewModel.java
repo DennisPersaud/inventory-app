@@ -5,8 +5,8 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.dennispersaudinventoryapplication.data.item.Item;
-import com.example.dennispersaudinventoryapplication.data.item.ItemRepository;
+import com.example.dennispersaudinventoryapplication.db.model.Item;
+import com.example.dennispersaudinventoryapplication.db.repo.ItemRepositoryImpl;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -14,20 +14,18 @@ import java.util.concurrent.ExecutionException;
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
-import dagger.hilt.android.qualifiers.ApplicationContext;
 
 @HiltViewModel
 public class DataActivityViewModel extends AndroidViewModel {
 
-    private final ItemRepository itemRepo;
+    private final ItemRepositoryImpl itemRepo;
 
     private final LiveData<List<Item>> mAllItems;
 
     @Inject
-    public DataActivityViewModel(Application application, ItemRepository itemRepo) {
+    public DataActivityViewModel(Application application, ItemRepositoryImpl itemRepo) {
         super(application);
         this.itemRepo = itemRepo;
-//        mRepo = new MainRepository(application);
         mAllItems = itemRepo.loadAllItems();
     }
 
@@ -39,7 +37,7 @@ public class DataActivityViewModel extends AndroidViewModel {
 
     public LiveData<List<Item>> loadAllItems() { return mAllItems; }
 
-    public List<Item> getAllItems() throws ExecutionException, InterruptedException { return itemRepo.getAllItems(); }
+//    public List<Item> getAllItems() throws ExecutionException, InterruptedException { return itemRepo.getAllItems(); }
 
     public Item getItemByName(String name) throws ExecutionException, InterruptedException { return itemRepo.getItemByName(name); }
 }

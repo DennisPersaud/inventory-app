@@ -17,6 +17,7 @@ import android.view.View;
 
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 
@@ -25,12 +26,15 @@ import com.example.dennispersaudinventoryapplication.R;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 @LargeTest
+@RunWith(AndroidJUnit4.class)
 public class MainActivityTests {
 
     private static final String USERNAME_TO_BE_TYPED = "Espresso";
     private static final String PASSWORD_TO_BE_TYPED = "Espresso";
+
     @Rule
     public ActivityScenarioRule<MainActivity> activityScenarioRule
             = new ActivityScenarioRule<>(MainActivity.class);
@@ -57,7 +61,7 @@ public class MainActivityTests {
      */
     @Test
     public void test_isActivityInView() {
-        onView(ViewMatchers.withId(R.id.mainActivity)).check(matches(isDisplayed()));
+        onView(ViewMatchers.withId(R.id.loginFragment)).check(matches(isDisplayed()));
     }
 
     /*
@@ -168,7 +172,7 @@ public class MainActivityTests {
         // Click button
         onView(withId(R.id.buttonLogin)).perform(click());
         // Check that the text was changed.
-        onView(withId(R.id.dataActivity)).check(matches(isDisplayed()));
+        onView(withId(R.id.dataFragment)).check(matches(isDisplayed()));
 //        onView(withId(com.google.android.material.R.id.snackbar_text))
 //                .check(matches(isDisplayed()));
 //        onView(withId(com.google.android.material.R.id.snackbar_text))

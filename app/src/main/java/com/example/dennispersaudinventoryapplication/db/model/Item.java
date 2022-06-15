@@ -1,10 +1,8 @@
-package com.example.dennispersaudinventoryapplication.data.item;
+package com.example.dennispersaudinventoryapplication.db.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
-import javax.inject.Inject;
 
 @Entity(tableName = "item_table")
 public class Item {

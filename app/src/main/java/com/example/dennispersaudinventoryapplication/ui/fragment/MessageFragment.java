@@ -13,13 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.dennispersaudinventoryapplication.R;
 import com.example.dennispersaudinventoryapplication.alerts.NotificationBuilder;
 import com.example.dennispersaudinventoryapplication.alerts.NotificationChannels;
-import com.example.dennispersaudinventoryapplication.R;
 import com.example.dennispersaudinventoryapplication.databinding.MessageFragmentBinding;
-import com.google.android.material.snackbar.Snackbar;
-
-import dagger.hilt.android.AndroidEntryPoint;
+import com.example.dennispersaudinventoryapplication.utils.StandardMessages;
 
 public class MessageFragment extends Fragment {
 
@@ -54,7 +52,6 @@ public class MessageFragment extends Fragment {
     }
 
     //TODO: Replace deprecated API
-/*
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
@@ -62,13 +59,10 @@ public class MessageFragment extends Fragment {
         int SMS_PERMISSION_CODE = 1;
         if (requestCode == SMS_PERMISSION_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Snackbar.make(messageFragmentBinding.messageActivity, "Permission Granted",
-                        Snackbar.LENGTH_SHORT).show();
+                StandardMessages.displayToast(messageFragmentBinding.messageActivity ,"Permission Granted");
             } else {
-                Snackbar.make(messageFragmentBinding.messageActivity, "Permission Denied",
-                        Snackbar.LENGTH_SHORT).show();
+                StandardMessages.displayToast(messageFragmentBinding.messageActivity, "Permission Denied");
             }
         }
     }
-*/
 }

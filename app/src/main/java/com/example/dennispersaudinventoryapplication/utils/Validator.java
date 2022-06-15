@@ -5,10 +5,6 @@ public class Validator {
         return password.equals(comparison);
     }
 
-    public static void validateRegistration() {
-
-    }
-
     public static boolean validateNotEmpty(String username, String password) {
         return username.isEmpty() && password.isEmpty();
     }

@@ -12,11 +12,12 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.dennispersaudinventoryapplication.R;
 import com.example.dennispersaudinventoryapplication.adapters.RecyclerAdapter;
-import com.example.dennispersaudinventoryapplication.data.item.Item;
+import com.example.dennispersaudinventoryapplication.db.model.Item;
 import com.example.dennispersaudinventoryapplication.databinding.DataFragmentBinding;
 import com.example.dennispersaudinventoryapplication.ui.NavigationHost;
 import com.example.dennispersaudinventoryapplication.ui.dialog.BottomSheetAddItemDialog;
@@ -31,7 +32,7 @@ public class DataFragment extends Fragment implements RecyclerAdapter.FragmentCo
 
     BottomSheetAddItemDialog bottomSheetAddItemDialog;
     BottomSheetUpdateItemDialog bottomSheetUpdateItemDialog;
-    DataActivityViewModel dataActivityViewModel;
+    private DataActivityViewModel dataActivityViewModel;
     DataFragmentBinding dataFragmentBinding;
 
     public View onCreateView(
@@ -39,6 +40,7 @@ public class DataFragment extends Fragment implements RecyclerAdapter.FragmentCo
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         dataFragmentBinding = DataFragmentBinding.inflate(inflater, container, false);
+        dataActivityViewModel = new ViewModelProvider(this).get(DataActivityViewModel.class);
 
         // Disable title bar
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayShowTitleEnabled(false);

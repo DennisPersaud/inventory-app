@@ -33,7 +33,7 @@ task clean(type: Delete) {
 ext {
     // Backwards compatibility
     appCompatVersion = '1.3.0'
-    rxJavaVersion = '3.x.y'
+//    rxJavaVersion = '3.x.y'
 
     // Room
     roomVersion = '2.3.0'
@@ -42,6 +42,9 @@ ext {
     // Lifecycle
     lifecycleVersion = '2.3.1'
 
+    // Kotlin
+    kotlinVersion = '1.4.10'
+
     // UI
     materialVersion = '1.4.0'
     constraintLayoutVersion = '2.0.4'
@@ -49,8 +52,9 @@ ext {
 
     // Testing
     junitVersion = '4.13.2'
+    mockitoVersion = '4.6.0'
     coreTestingVersion = '2.1.0'
-    truthVersion = '1.1.3'
+//    truthVersion = '1.1.3'
     androidxJunitVersion = '1.1.2'
     espressoVersion = '3.4.0'
 }

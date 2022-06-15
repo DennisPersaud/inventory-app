@@ -7,9 +7,10 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.dennispersaudinventoryapplication.R;
-import com.example.dennispersaudinventoryapplication.data.user.User;
+import com.example.dennispersaudinventoryapplication.db.model.User;
 import com.example.dennispersaudinventoryapplication.databinding.LoginFragmentBinding;
 import com.example.dennispersaudinventoryapplication.ui.NavigationHost;
 import com.example.dennispersaudinventoryapplication.utils.StandardMessages;
@@ -20,11 +21,12 @@ import java.util.Objects;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class LoginFragment extends Fragment {
 
-//    private final int counter = 5;
-    MainActivityViewModel mainViewModel;
+    private MainActivityViewModel mainViewModel;
     LoginFragmentBinding loginFragmentBinding;
+    DataFragment dataFragment;
     User user;
 
 
@@ -33,6 +35,8 @@ public class LoginFragment extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         loginFragmentBinding = LoginFragmentBinding.inflate(inflater, container, false);
+        mainViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        dataFragment = (DataFragment) getChildFragmentManager().findFragmentById(R.id.dataFragment);
 
         loginFragmentBinding.buttonLogin.setOnClickListener(v -> {
             try {
@@ -44,7 +48,7 @@ public class LoginFragment extends Fragment {
                             getString(R.string.toast_loginSuccess));
                     loginFragmentBinding.getRoot().removeAllViews();
                     ((NavigationHost) requireActivity()).navigateTo(
-                            getDataFragment(), true); // Navigate to the next Fragment
+                            dataFragment, true); // Navigate to the next Fragment
                 } else {
                     loginFragmentBinding.etPassword.setError(getString(R.string.toast_loginFailed));
                 }
@@ -61,23 +65,15 @@ public class LoginFragment extends Fragment {
                 boolean checkNotEmpty = Validator.validateNotEmpty(getUsernameInput(), getPasswordInput());
                 boolean checkLength = Validator.validatePasswordLength(getPasswordInput());
 
-                if (checkRegistration) {
-                    if (checkNotEmpty) {
-                        if (checkLength) {
-                            user.setUserName(getUsernameInput());
-                            user.setUserPassword(getPasswordInput());
-                            mainViewModel.insertUser(user.getInstance());
-                            StandardMessages.displayToast(loginFragmentBinding.loginFragment,
-                                    getString(R.string.toast_createAccountSuccess));
-                        } else {
-                            loginFragmentBinding.etPassword.setError("Enter a 6 character password.");
-                        }
-                    } else {
-                        loginFragmentBinding.etUsername.setError("Enter a username.");
-                        loginFragmentBinding.etPassword.setError("Enter a 6 character password.");
-                    }
+                if (checkRegistration && checkNotEmpty && checkLength) {
+
+                    user.setUserName(getUsernameInput());
+                    user.setUserPassword(getPasswordInput());
+                    mainViewModel.insertUser(user.getInstance());
+                    StandardMessages.displayToast(loginFragmentBinding.loginFragment,
+                            getString(R.string.toast_createAccountSuccess));
                 } else {
-                    loginFragmentBinding.etUsername.setError("Username already exists.");
+                    loginFragmentBinding.etUsername.setError("Error: Please try again.");
                 }
             } catch (Exception e) {
                 StandardMessages.displayToast(loginFragmentBinding.loginFragment,
@@ -95,9 +91,6 @@ public class LoginFragment extends Fragment {
         super.onDestroyView();
     }
 
-    private DataFragment getDataFragment() {
-        return new DataFragment();
-    }
 
     private String getUsernameInput() {
         return Objects.requireNonNull(loginFragmentBinding.etUsername.getText()).toString();
@@ -107,7 +100,11 @@ public class LoginFragment extends Fragment {
         return Objects.requireNonNull(loginFragmentBinding.etPassword.getText()).toString();
     }
 
-    public static LoginFragment getLoginFragment() {
-        return new LoginFragment();
-    }
+//    public static LoginFragment getLoginFragment() {
+//        return new LoginFragment();
+//    }
+
+//    private DataFragment getDataFragment() {
+//        return new DataFragment();
+//    }
 }

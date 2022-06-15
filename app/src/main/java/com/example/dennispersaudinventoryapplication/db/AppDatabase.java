@@ -1,11 +1,11 @@
-package com.example.dennispersaudinventoryapplication.data;
+package com.example.dennispersaudinventoryapplication.db;
 
 import androidx.room.RoomDatabase;
 
-import com.example.dennispersaudinventoryapplication.data.item.Item;
-import com.example.dennispersaudinventoryapplication.data.item.ItemDao;
-import com.example.dennispersaudinventoryapplication.data.user.User;
-import com.example.dennispersaudinventoryapplication.data.user.UserDao;
+import com.example.dennispersaudinventoryapplication.db.model.Item;
+import com.example.dennispersaudinventoryapplication.db.model.ItemDao;
+import com.example.dennispersaudinventoryapplication.db.model.User;
+import com.example.dennispersaudinventoryapplication.db.model.UserDao;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

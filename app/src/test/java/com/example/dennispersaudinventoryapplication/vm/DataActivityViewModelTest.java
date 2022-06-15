@@ -6,7 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class MainActivityViewModelTest {
+public class DataActivityViewModelTest {
 
     @Before
     public void setUp() throws Exception {
@@ -17,14 +17,22 @@ public class MainActivityViewModelTest {
     }
 
     @Test
-    public void insertUser() {
+    public void insertItem() {
     }
 
     @Test
-    public void getPasswordByName() {
+    public void updateItem() {
     }
 
     @Test
-    public void getUsernameByName() {
+    public void deleteItem() {
+    }
+
+    @Test
+    public void loadAllItems() {
+    }
+
+    @Test
+    public void getItemByName() {
     }
 }

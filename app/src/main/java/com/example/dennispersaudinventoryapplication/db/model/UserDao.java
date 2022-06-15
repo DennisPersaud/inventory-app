@@ -1,4 +1,4 @@
-package com.example.dennispersaudinventoryapplication.data.user;
+package com.example.dennispersaudinventoryapplication.db.model;
 
 import androidx.room.Dao;
 import androidx.room.Delete;

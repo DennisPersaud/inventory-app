@@ -1,20 +1,17 @@
 package com.example.dennispersaudinventoryapplication.di;
 
-import android.app.Application;
+import android.content.Context;
 
 import androidx.room.Room;
 
-import com.example.dennispersaudinventoryapplication.data.DatabaseCallback;
-import com.example.dennispersaudinventoryapplication.data.item.Item;
-import com.example.dennispersaudinventoryapplication.data.item.ItemDao;
-import com.example.dennispersaudinventoryapplication.data.AppDatabase;
-import com.example.dennispersaudinventoryapplication.data.user.User;
-import com.example.dennispersaudinventoryapplication.data.user.UserDao;
+import com.example.dennispersaudinventoryapplication.db.AppDatabase;
+import com.example.dennispersaudinventoryapplication.db.DatabaseCallback;
+import com.example.dennispersaudinventoryapplication.db.model.ItemDao;
+import com.example.dennispersaudinventoryapplication.db.model.UserDao;
 
-import javax.inject.Named;
+import javax.inject.Provider;
 import javax.inject.Singleton;
 
-import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 import dagger.hilt.InstallIn;
@@ -25,15 +22,15 @@ import dagger.hilt.components.SingletonComponent;
 @InstallIn(SingletonComponent.class)
 public class ApplicationModule {
 
-    @Provides
     @Singleton
-    public AppDatabase provideDatabase(Application app, DatabaseCallback callback) {
+    @Provides
+    public AppDatabase provideDatabase(@ApplicationContext Context context, Provider<AppDatabase> provider) {
         synchronized (AppDatabase.class) {
             if (AppDatabase.getInstance() == null) {
                 AppDatabase.setInstance(
-                Room.databaseBuilder(app.getApplicationContext(),
+                Room.databaseBuilder(context,
                                 AppDatabase.class, "main_database")
-                        .addCallback(callback)
+                        .addCallback(new DatabaseCallback(provider))
                         .build()
                 );
             }

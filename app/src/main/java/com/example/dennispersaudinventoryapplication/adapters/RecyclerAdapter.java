@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.dennispersaudinventoryapplication.data.item.Item;
+import com.example.dennispersaudinventoryapplication.db.model.Item;
 import com.example.dennispersaudinventoryapplication.R;
 
 import java.util.List;

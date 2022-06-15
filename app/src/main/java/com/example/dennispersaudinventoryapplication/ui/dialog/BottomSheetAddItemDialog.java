@@ -7,28 +7,26 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.example.dennispersaudinventoryapplication.data.item.Item;
+import com.example.dennispersaudinventoryapplication.db.model.Item;
+import com.example.dennispersaudinventoryapplication.databinding.BottomSheetLayoutAddItemBinding;
 import com.example.dennispersaudinventoryapplication.utils.StandardMessages;
 import com.example.dennispersaudinventoryapplication.utils.Validator;
 import com.example.dennispersaudinventoryapplication.vm.DataActivityViewModel;
-import com.example.dennispersaudinventoryapplication.databinding.BottomSheetLayoutAddItemBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-
-import javax.inject.Inject;
-
-import dagger.hilt.android.AndroidEntryPoint;
 
 public class BottomSheetAddItemDialog extends BottomSheetDialogFragment {
 
     BottomSheetLayoutAddItemBinding bottomSheetLayoutAddItemBinding;
-    DataActivityViewModel dataActivityViewModel;
+    private DataActivityViewModel dataActivityViewModel;
     Item item;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         bottomSheetLayoutAddItemBinding = BottomSheetLayoutAddItemBinding.inflate(inflater, container, false);
+        dataActivityViewModel = new ViewModelProvider(this).get(DataActivityViewModel.class);
 
         bottomSheetLayoutAddItemBinding.buttonAdd.setOnClickListener(v1 -> {
             boolean validateItem = Validator.validateItemInfo(getAddItemName(), getAddItemPrice(), getAddItemCount());

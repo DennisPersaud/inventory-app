@@ -1,7 +1,6 @@
 package com.example.dennispersaudinventoryapplication.ui;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -15,17 +14,21 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity implements NavigationHost {
 
+    LoginFragment loginFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        loginFragment = (LoginFragment) getSupportFragmentManager().findFragmentById(R.id.loginFragment);
+
         if (savedInstanceState == null) {
+            assert loginFragment != null;
             getSupportFragmentManager()
                     .beginTransaction()
                     .setReorderingAllowed(true)
-                    .add(R.id.container, LoginFragment.getLoginFragment())
+                    .add(R.id.container, loginFragment)
                     .commit();
         }
     }
