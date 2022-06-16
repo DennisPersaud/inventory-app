@@ -24,7 +24,6 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class LoginFragment extends Fragment {
 
-    private MainActivityViewModel mainViewModel;
     LoginFragmentBinding loginFragmentBinding;
     User user;
 
@@ -34,12 +33,11 @@ public class LoginFragment extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         loginFragmentBinding = LoginFragmentBinding.inflate(inflater, container, false);
-        mainViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
         loginFragmentBinding.buttonLogin.setOnClickListener(v -> {
             try {
                 boolean checkLogin = Validator.validateLogin(getPasswordInput(),
-                        mainViewModel.getPasswordByName(getUsernameInput()));
+                        initVM().getPasswordByName(getUsernameInput()));
 
                 if (checkLogin) {
                     StandardMessages.displayToast(loginFragmentBinding.loginFragment,
@@ -59,7 +57,7 @@ public class LoginFragment extends Fragment {
         loginFragmentBinding.buttonCreateAccount.setOnClickListener(v -> {
             try {
                 boolean checkRegistration = Validator.validateLogin(getUsernameInput(),
-                        mainViewModel.getUsernameByName(getUsernameInput()));
+                        initVM().getUsernameByName(getUsernameInput()));
                 boolean checkNotEmpty = Validator.validateNotEmpty(getUsernameInput(), getPasswordInput());
                 boolean checkLength = Validator.validatePasswordLength(getPasswordInput());
 
@@ -67,7 +65,7 @@ public class LoginFragment extends Fragment {
 
                     user.setUserName(getUsernameInput());
                     user.setUserPassword(getPasswordInput());
-                    mainViewModel.insertUser(user.getInstance());
+                    initVM().insertUser(user.getInstance());
                     StandardMessages.displayToast(loginFragmentBinding.loginFragment,
                             getString(R.string.toast_createAccountSuccess));
                 } else {
@@ -89,6 +87,9 @@ public class LoginFragment extends Fragment {
         super.onDestroyView();
     }
 
+    private MainActivityViewModel initVM() {
+        return new ViewModelProvider(this).get(MainActivityViewModel.class);
+    }
 
     private String getUsernameInput() {
         return Objects.requireNonNull(loginFragmentBinding.etUsername.getText()).toString();
@@ -98,11 +99,4 @@ public class LoginFragment extends Fragment {
         return Objects.requireNonNull(loginFragmentBinding.etPassword.getText()).toString();
     }
 
-    public static LoginFragment getLoginFragment() {
-        return new LoginFragment();
-    }
-
-    private DataFragment getDataFragment() {
-        return new DataFragment();
-    }
 }

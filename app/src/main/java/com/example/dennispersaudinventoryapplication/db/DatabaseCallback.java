@@ -18,7 +18,7 @@ import javax.inject.Provider;
 
 public class DatabaseCallback extends RoomDatabase.Callback {
 
-    private final AppDatabase database;
+    final AppDatabase database;
     private ItemDao itemDao;
     private UserDao userDao;
 
@@ -26,6 +26,7 @@ public class DatabaseCallback extends RoomDatabase.Callback {
     Item sampleItem2;
     User sampleUser;
 
+    @Inject
     public DatabaseCallback(Provider<AppDatabase> databaseProvider){
         database = databaseProvider.get();
     }
