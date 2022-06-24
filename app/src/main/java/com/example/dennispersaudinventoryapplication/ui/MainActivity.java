@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.dennispersaudinventoryapplication.R;
+import com.example.dennispersaudinventoryapplication.ui.fragment.DataFragment;
 import com.example.dennispersaudinventoryapplication.ui.fragment.LoginFragment;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements NavigationHost {
             getSupportFragmentManager()
                     .beginTransaction()
                     .setReorderingAllowed(true)
-                    .add(R.id.container, new LoginFragment())
+                    .add(R.id.container, new DataFragment())
                     .commit();
         }
     }

@@ -1,6 +1,7 @@
 package com.example.dennispersaudinventoryapplication.ui.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,18 +37,33 @@ public class LoginFragment extends Fragment {
 
         loginFragmentBinding.buttonLogin.setOnClickListener(v -> {
             try {
-                boolean checkLogin = Validator.validateLogin(getPasswordInput(),
-                        initVM().getPasswordByName(getUsernameInput()));
+                if (!getUsernameInput().isEmpty() && !getPasswordInput().isEmpty()) {
+                    if (getPasswordInput().equals(initVM().getPasswordByName(getPasswordInput()))) {
+                        StandardMessages.displayToast(loginFragmentBinding.loginFragment,
+                                getString(R.string.toast_loginSuccess));
+                        loginFragmentBinding.getRoot().removeAllViews();
+                        ((NavigationHost) requireActivity()).navigateTo(
+                                new DataFragment(), true); // Navigate to the next Fragment
 
-                if (checkLogin) {
-                    StandardMessages.displayToast(loginFragmentBinding.loginFragment,
-                            getString(R.string.toast_loginSuccess));
-                    loginFragmentBinding.getRoot().removeAllViews();
-                    ((NavigationHost) requireActivity()).navigateTo(
-                            new DataFragment(), true); // Navigate to the next Fragment
+                    } else {
+                        loginFragmentBinding.etPassword.setError("Incorrect Password");
+                    }
                 } else {
-                    loginFragmentBinding.etPassword.setError(getString(R.string.toast_loginFailed));
+                    loginFragmentBinding.etUsername.setError("Error: Enter username.");
+                    loginFragmentBinding.etPassword.setError("Error: Enter password.");
                 }
+//                boolean checkLogin = Validator.validateLogin(getPasswordInput(),
+//                        initVM().getPasswordByName(getUsernameInput()));
+//
+//                if (checkLogin) {
+//                    StandardMessages.displayToast(loginFragmentBinding.loginFragment,
+//                            getString(R.string.toast_loginSuccess));
+//                    loginFragmentBinding.getRoot().removeAllViews();
+//                    ((NavigationHost) requireActivity()).navigateTo(
+//                            new DataFragment(), true); // Navigate to the next Fragment
+//                } else {
+//                    loginFragmentBinding.etPassword.setError(getString(R.string.toast_loginFailed));
+//                }
             } catch (Exception e) {
                 StandardMessages.displayToast(loginFragmentBinding.loginFragment,
                         Objects.requireNonNull(e.getMessage()));
@@ -56,21 +72,39 @@ public class LoginFragment extends Fragment {
 
         loginFragmentBinding.buttonCreateAccount.setOnClickListener(v -> {
             try {
-                boolean checkRegistration = Validator.validateLogin(getUsernameInput(),
-                        initVM().getUsernameByName(getUsernameInput()));
-                boolean checkNotEmpty = Validator.validateNotEmpty(getUsernameInput(), getPasswordInput());
-                boolean checkLength = Validator.validatePasswordLength(getPasswordInput());
 
-                if (checkRegistration && checkNotEmpty && checkLength) {
-
-                    user.setUserName(getUsernameInput());
-                    user.setUserPassword(getPasswordInput());
-                    initVM().insertUser(user.getInstance());
-                    StandardMessages.displayToast(loginFragmentBinding.loginFragment,
-                            getString(R.string.toast_createAccountSuccess));
+                if (!getUsernameInput().isEmpty() && !getPasswordInput().isEmpty()) {
+                    if (getPasswordInput().length() <= 6) {
+                        Log.d("DEBUG", getUsernameInput());
+                        Log.d("DEBUG", getPasswordInput());
+                        user.setUserName(getUsernameInput());
+                        user.setUserPassword(getPasswordInput());
+                        initVM().insertUser(user);
+                        StandardMessages.displayToast(loginFragmentBinding.loginFragment,
+                                getString(R.string.toast_createAccountSuccess));
+                    } else {
+                        loginFragmentBinding.etPassword.setError("Password must be 6 characters.");
+                    }
                 } else {
-                    loginFragmentBinding.etUsername.setError("Error: Please try again.");
+
+                    loginFragmentBinding.etUsername.setError("Error: Enter username.");
+                    loginFragmentBinding.etPassword.setError("Error: Enter password.");
                 }
+//                boolean checkRegistration = Validator.validateLogin(getUsernameInput(),
+//                        initVM().getUsernameByName(getUsernameInput()));
+//                boolean checkNotEmpty = Validator.validateNotEmpty(getUsernameInput(), getPasswordInput());
+//                boolean checkLength = Validator.validatePasswordLength(getPasswordInput());
+//
+//                if (checkRegistration && checkNotEmpty && checkLength) {
+//
+//                    user.setUserName(getUsernameInput());
+//                    user.setUserPassword(getPasswordInput());
+//                    initVM().insertUser(user.getInstance());
+//                    StandardMessages.displayToast(loginFragmentBinding.loginFragment,
+//                            getString(R.string.toast_createAccountSuccess));
+//                } else {
+//                    loginFragmentBinding.etUsername.setError("Error: Please try again.");
+//                }
             } catch (Exception e) {
                 StandardMessages.displayToast(loginFragmentBinding.loginFragment,
                         Objects.requireNonNull(e.getMessage()));

@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.dennispersaudinventoryapplication.db.model.Item;
+import com.example.dennispersaudinventoryapplication.db.repo.ItemRepository;
 import com.example.dennispersaudinventoryapplication.db.repo.ItemRepositoryImpl;
 
 import java.util.List;
@@ -18,12 +19,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 @HiltViewModel
 public class DataActivityViewModel extends AndroidViewModel {
 
-    private final ItemRepositoryImpl itemRepo;
+    private final ItemRepository itemRepo;
 
     private final LiveData<List<Item>> mAllItems;
 
     @Inject
-    public DataActivityViewModel(Application application, ItemRepositoryImpl itemRepo) {
+    public DataActivityViewModel(Application application, ItemRepository itemRepo) {
         super(application);
         this.itemRepo = itemRepo;
         mAllItems = itemRepo.loadAllItems();

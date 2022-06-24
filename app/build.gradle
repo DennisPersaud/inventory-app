@@ -57,12 +57,12 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
     implementation "com.google.android.material:material:$rootProject.materialVersion"
 
-    // Kotlin Stdlib
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+//    // Kotlin Stdlib
+//    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
     // Hilt
-    implementation "com.google.dagger:hilt-android:2.40.5"
-    annotationProcessor "com.google.dagger:hilt-compiler:2.38.1"
+    implementation 'com.google.dagger:hilt-android:2.42'
+    annotationProcessor 'com.google.dagger:hilt-compiler:2.42'
 
     // Testing
     testImplementation "junit:junit:$rootProject.junitVersion"
