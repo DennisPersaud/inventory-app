@@ -19,12 +19,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 @HiltViewModel
 public class DataActivityViewModel extends AndroidViewModel {
 
-    private final ItemRepository itemRepo;
+    private final ItemRepositoryImpl itemRepo;
 
     private final LiveData<List<Item>> mAllItems;
 
     @Inject
-    public DataActivityViewModel(Application application, ItemRepository itemRepo) {
+    public DataActivityViewModel(Application application, ItemRepositoryImpl itemRepo) {
         super(application);
         this.itemRepo = itemRepo;
         mAllItems = itemRepo.loadAllItems();

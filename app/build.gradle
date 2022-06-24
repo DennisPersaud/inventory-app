@@ -34,6 +34,12 @@ android {
     namespace 'com.example.dennispersaudinventoryapplication'
 }
 
+configurations {
+    all {
+        exclude group: 'androidx.lifecycle', module: 'lifecycle-viewmodel-ktx'
+    }
+}
+
 dependencies {
 
     // Backwards compatibility
@@ -57,7 +63,7 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
     implementation "com.google.android.material:material:$rootProject.materialVersion"
 
-//    // Kotlin Stdlib
+    // Kotlin Stdlib
 //    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
     // Hilt

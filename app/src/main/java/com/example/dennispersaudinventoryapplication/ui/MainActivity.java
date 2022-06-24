@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements NavigationHost {
             getSupportFragmentManager()
                     .beginTransaction()
                     .setReorderingAllowed(true)
-                    .add(R.id.container, new DataFragment())
+                    .add(R.id.container, new LoginFragment())
                     .commit();
         }
     }
