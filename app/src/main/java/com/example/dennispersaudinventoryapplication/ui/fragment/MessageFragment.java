@@ -19,6 +19,9 @@ import com.example.dennispersaudinventoryapplication.alerts.NotificationChannels
 import com.example.dennispersaudinventoryapplication.databinding.MessageFragmentBinding;
 import com.example.dennispersaudinventoryapplication.utils.StandardMessages;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class MessageFragment extends Fragment {
 
     // Notification channel constant

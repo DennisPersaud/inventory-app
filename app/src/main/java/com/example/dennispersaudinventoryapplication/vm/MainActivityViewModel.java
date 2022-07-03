@@ -17,10 +17,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 @HiltViewModel
 public class MainActivityViewModel extends AndroidViewModel {
 
-    private final UserRepositoryImpl userRepo;
+    private final UserRepository userRepo;
 
     @Inject
-    public MainActivityViewModel(Application application, UserRepositoryImpl userRepo) {
+    public MainActivityViewModel(Application application, UserRepository userRepo) {
         super(application);
         this.userRepo = userRepo;
 //        mRepo = new MainRepository(application);

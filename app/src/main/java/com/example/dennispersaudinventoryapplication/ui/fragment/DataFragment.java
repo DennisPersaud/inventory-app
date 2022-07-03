@@ -1,5 +1,6 @@
 package com.example.dennispersaudinventoryapplication.ui.fragment;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +29,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class DataFragment extends Fragment implements RecyclerAdapter.FragmentCommunicator {
 
     BottomSheetAddItemDialog bottomSheetAddItemDialog;
@@ -66,7 +70,9 @@ public class DataFragment extends Fragment implements RecyclerAdapter.FragmentCo
         // Floating action button listener
         dataFragmentBinding.fabAddItem.setOnClickListener(v -> bottomSheetAddItemDialog.show(
                 getChildFragmentManager(), "addItemSheet"));
-        dataFragmentBinding.fabAddItem.setTooltipText("Add item");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            dataFragmentBinding.fabAddItem.setTooltipText("Add item");
+        }
 
         return dataFragmentBinding.getRoot();
     }
