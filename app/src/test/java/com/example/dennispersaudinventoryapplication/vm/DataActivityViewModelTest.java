@@ -1,6 +1,7 @@
 package com.example.dennispersaudinventoryapplication.vm;
 
-import static org.junit.Assert.*;
+import com.example.dennispersaudinventoryapplication.db.model.Item;
+import com.example.dennispersaudinventoryapplication.respoitories.FakeItemRepository;
 
 import org.junit.After;
 import org.junit.Before;
@@ -8,16 +9,20 @@ import org.junit.Test;
 
 public class DataActivityViewModelTest {
 
+    private DataActivityViewModel viewModel;
+
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
+        viewModel = new DataActivityViewModel(viewModel.getApplication(), new FakeItemRepository());
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
     }
 
     @Test
     public void insertItem() {
+        viewModel.insertItem(new Item("book", 1, 2));
     }
 
     @Test

@@ -1,19 +1,18 @@
 package com.example.dennispersaudinventoryapplication.vm;
 
-import static org.junit.Assert.*;
+import com.example.dennispersaudinventoryapplication.respoitories.FakeUserRepository;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class MainActivityViewModelTest {
 
-    @Before
-    public void setUp() throws Exception {
-    }
+    private MainActivityViewModel viewModel;
 
-    @After
-    public void tearDown() throws Exception {
+
+    @Before
+    public void setUp() {
+        viewModel = new MainActivityViewModel(viewModel.getApplication(), new FakeUserRepository());
     }
 
     @Test
