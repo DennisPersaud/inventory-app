@@ -3,8 +3,8 @@ package com.example.dennispersaudinventoryapplication.respoitories;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.dennispersaudinventoryapplication.db.model.Item;
-import com.example.dennispersaudinventoryapplication.db.repo.ItemRepository;
+import com.example.dennispersaudinventoryapplication.feature_inventory.domain.model.Item;
+import com.example.dennispersaudinventoryapplication.feature_inventory.domain.repository.ItemRepository;
 
 import java.util.ArrayList;
 import java.util.List;

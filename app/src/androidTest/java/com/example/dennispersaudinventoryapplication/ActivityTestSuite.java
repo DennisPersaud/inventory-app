@@ -1,12 +1,10 @@
 package com.example.dennispersaudinventoryapplication;
 
-import com.example.dennispersaudinventoryapplication.db.model.ItemDaoTest;
-import com.example.dennispersaudinventoryapplication.db.model.UserDaoTest;
-import com.example.dennispersaudinventoryapplication.ui.DataActivityTests;
-import com.example.dennispersaudinventoryapplication.ui.MainActivityTests;
-import com.example.dennispersaudinventoryapplication.ui.MessageActivityTests;
-import com.example.dennispersaudinventoryapplication.ui.fragment.DataFragment;
-import com.example.dennispersaudinventoryapplication.ui.fragment.MessageFragment;
+import com.example.dennispersaudinventoryapplication.feature_inventory.data.local.dao.ItemDaoTest;
+import com.example.dennispersaudinventoryapplication.feature_inventory.data.local.dao.UserDaoTest;
+import com.example.dennispersaudinventoryapplication.feature_inventory.presentation.ui.MainActivityTests;
+import com.example.dennispersaudinventoryapplication.feature_inventory.presentation.inventory.DataFragment;
+import com.example.dennispersaudinventoryapplication.feature_inventory.presentation.settings.MessageFragment;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

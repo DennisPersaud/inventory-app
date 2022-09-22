@@ -1,7 +1,7 @@
 package com.example.dennispersaudinventoryapplication.respoitories;
 
-import com.example.dennispersaudinventoryapplication.db.model.User;
-import com.example.dennispersaudinventoryapplication.db.repo.UserRepository;
+import com.example.dennispersaudinventoryapplication.feature_inventory.domain.model.User;
+import com.example.dennispersaudinventoryapplication.feature_inventory.domain.repository.UserRepository;
 
 import java.util.ArrayList;
 
